@@ -15,7 +15,6 @@
         <h1 v-if="block.type=='text'">{{block.content}}</h1>
       </md-button> -->
 
-      <md-button class="md-raised md-primary block" md-menu-trigger @click="selectedBlock = 'HTML'">HTML</md-button>
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
@@ -24,6 +23,8 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='HTML'" md-menu-trigger>{{'adae'}}</md-button>
+
         <br v-if="block.type=='newLine'">
 
         <!-- <h1 v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</h1>
@@ -37,17 +38,18 @@
               <span v-if="hint.type=='value'">{{hint.name}}</span>
               <span v-if="hint.type=='endTag'">{{hint.name}}</span>
               <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
+              <span class="comment">{{hint.comment}}</span>
 
             </md-menu-item>
           </div>
-          <md-menu-item  v-on:selected="removeBlock(block)">
+          <md-menu-item v-on:selected="removeBlock(block)" >
             <span>削除</span>
           </md-menu-item>
-          <md-menu-item　v-on:selected="newLine()">
+          <md-menu-item v-on:selected="newLine()">
             <span>新しく書く</span>
           </md-menu-item>
 
-
+<!-- v-if="hint.type=='HTML'" -->
 
         </md-menu-content>
       </md-menu>
@@ -64,16 +66,8 @@ export default {
     return {
       blocks: [
         {
-          type: 'tag',
+          type: 'HTML',
           name: 'HTML'
-        },
-        {
-          type: 'tag',
-          name: 'a'
-        },
-        {
-          type: 'text',
-          content: 'djafoaejo'
         }
       ],
       selectedBlock: null
@@ -151,4 +145,9 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+.comment{
+  right: 0px;
+}
+
 </style>

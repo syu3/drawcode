@@ -5,8 +5,8 @@ export default function getHints (selectedBlock) {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
-        type: 'text',
-        content: 'テキスト'
+        type: 'endTag',
+        name: '>'
       })
     } else if (selectedBlock.name === 'a') {
       console.log('hi')
@@ -20,27 +20,33 @@ export default function getHints (selectedBlock) {
       // 「テキスト」を表示
       hints.push({
         type: 'tag',
-        name: 'a'
+        name: 'a',
+        comment: 'リンク'
       })
       hints.push({
         type: 'tag',
-        name: 'p'
+        name: 'p',
+        comment: '文字'
       })
       hints.push({
         type: 'tag',
-        name: 'img'
+        name: 'img',
+        comment: '画像'
       })
       hints.push({
         type: 'tag',
-        name: 'button'
+        name: 'button',
+        comment: 'ボタン'
       })
       hints.push({
         type: 'tag',
-        name: 'hr'
+        name: 'hr',
+        comment: '線'
       })
       hints.push({
         type: 'tag',
-        name: 'h1'
+        name: 'h1',
+        comment: '題名'
       })
     } else if (selectedBlock.name === 'href') {
       console.log('hi')
@@ -67,12 +73,9 @@ export default function getHints (selectedBlock) {
         type: 'closeTag',
         name: '/p'
       })
-    } else if (selectedBlock.name === '') {
-      console.log('hi')
-      // 「テキスト」を表示
       hints.push({
-        type: '',
-        name: ''
+        type: 'closeTag',
+        name: '/a'
       })
     } else if (selectedBlock.name === '') {
       console.log('hi')
@@ -80,6 +83,13 @@ export default function getHints (selectedBlock) {
       hints.push({
         type: '',
         name: ''
+      })
+    } else if (selectedBlock.name === '>' || selectedBlock.name === 'br') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'text',
+        content: 'テキスト'
       })
     } else if (selectedBlock.name === '') {
       console.log('hi')
