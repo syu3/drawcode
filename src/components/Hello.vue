@@ -23,7 +23,7 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='HTML'" md-menu-trigger>{{'adae'}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger>{{block.name}}</md-button>
 
         <br v-if="block.type=='newLine'">
 
@@ -38,18 +38,19 @@
               <span v-if="hint.type=='value'">{{hint.name}}</span>
               <span v-if="hint.type=='endTag'">{{hint.name}}</span>
               <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
+              <span v-if="hint.type=='root'">{{hint.name}}</span>
               <span class="comment">{{hint.comment}}</span>
 
             </md-menu-item>
           </div>
-          <md-button @click="removeBlock(block)" class="md-raised md-primary">
+          <md-button @click="removeBlock(block)" class="md-raised md-primary" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
           <md-menu-item v-on:selected="newLine()">
             <span>新しく書く</span>
           </md-menu-item>
 
-<!-- v-if="hint.type=='HTML'" -->
+<!-- v-if="hint.type=='root'" -->
 
         </md-menu-content>
       </md-menu>
@@ -66,7 +67,7 @@ export default {
     return {
       blocks: [
         {
-          type: 'tag',
+          type: 'root',
           name: 'HTML'
         }
       ],
