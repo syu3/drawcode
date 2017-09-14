@@ -42,7 +42,7 @@
 
             </md-menu-item>
           </div>
-          <md-button v-on:selected="removeBlock(block)" class="md-raised md-primary">
+          <md-button @click="removeBlock(block)" class="md-raised md-primary">
             <span>削除</span>
           </md-button>
           <md-menu-item v-on:selected="newLine()">
@@ -66,7 +66,7 @@ export default {
     return {
       blocks: [
         {
-          type: 'HTML',
+          type: 'tag',
           name: 'HTML'
         }
       ],

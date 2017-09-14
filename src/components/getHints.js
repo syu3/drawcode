@@ -77,14 +77,14 @@ export default function getHints (selectedBlock) {
         type: 'closeTag',
         name: '/a'
       })
-    } else if (selectedBlock.name === '') {
+    } else if (selectedBlock.name === 'br') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
-        type: '',
-        name: ''
+        type: 'endTag',
+        name: '>'
       })
-    } else if (selectedBlock.name === '>' || selectedBlock.name === 'br') {
+    } else if (selectedBlock.name === '>') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
