@@ -42,9 +42,9 @@
 
             </md-menu-item>
           </div>
-          <md-menu-item v-on:selected="removeBlock(block)" >
+          <md-button v-on:selected="removeBlock(block)" class="md-raised md-primary">
             <span>削除</span>
-          </md-menu-item>
+          </md-button>
           <md-menu-item v-on:selected="newLine()">
             <span>新しく書く</span>
           </md-menu-item>
@@ -135,8 +135,12 @@ a {
   display: flex;
   flex-direction: column;
   max-height: 200px;
-  overflow: scroll;
+  overflow-y:scroll;
+
 }
+.hint-container::-webkit-scrollbar{width:10px;}/*バーの太さ*/
+.hint-container::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
+.hint-container::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 .hint{
   display: block;
 }
