@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div class="blocks">
+    <div class="blocks"　v-for="blocks in blocksArray">
       <!-- <md-button class="md-raised md-primary block">p</md-button>
       <md-icon>trending_flat</md-icon>
       <md-button class="md-raised md-primary block">&gt;</md-button>
@@ -110,6 +110,10 @@ export default {
       console.log(this.selectedBlock)
       var hints = getHints(this.selectedBlock)
       return hints
+    },
+    blocksArray() {
+      return [this.blocks]
+      // 改行ごとに、区切る
     }
   }
 }
