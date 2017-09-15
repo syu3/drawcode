@@ -16,8 +16,9 @@
         <h3 class="md-title">メニュー</h3>
       </div>
     </md-toolbar>
-      <md-button>ホーム</md-button>
-      <md-button>みんなのコード</md-button>
+      <md-button class="sideNavHomeButton"  href="#/home">ホーム</md-button>
+      <md-button class="sideNavCodeButton" href='#'>コード作成</md-button>
+      <md-button class="sideNavCodeButton" href='#/code'>みんなのコード</md-button>
 </md-sidenav>
 
 
@@ -44,10 +45,16 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 h2{
   margin: 0;
+}
+.sideNavHomeButton{
+  display: block;
+}
+
+.sideNavCodeButton{
+  display: block;
 }
 </style>

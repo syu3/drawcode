@@ -139,7 +139,7 @@ a {
   overflow-y:scroll;
 
 }
-.hint-container::-webkit-scrollbar{width:10px;}/*バーの太さ*/
+.hint-container::-webkit-scrollbar{width:5px;}/*バーの太さ*/
 .hint-container::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
 .hint-container::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
 .hint{
