@@ -23,7 +23,9 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger>{{block.name}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='newLine'" md-menu-trigger >↩︎</md-button>
+
 
         <br v-if="block.type=='newLine'">
 
@@ -96,7 +98,12 @@ export default {
         this.blocks.splice(index, 1)
       }
     },
-    newLine() {}
+    newLine() {
+      var index = this.blocks.indexOf(this.selectedBlock)
+      if (index >= 0) {
+        this.blocks.splice(index + 1, 0, { type: 'newLine' })
+      }
+    }
   },
   computed: {
     hints() {

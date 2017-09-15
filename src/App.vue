@@ -5,6 +5,7 @@
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title" style="flex:1">DrawCode</h2>
+
       <md-button class="md-raised">保存</md-button>
       <md-button class="md-raised">プレビュー</md-button>
       <md-button class="md-raised md-warn">公開</md-button>
@@ -15,10 +16,11 @@
       <div class="md-toolbar-container">
         <h3 class="md-title">メニュー</h3>
       </div>
+
     </md-toolbar>
-      <md-button class="sideNavHomeButton"  href="#/home">ホーム</md-button>
-      <md-button class="sideNavCodeButton" href='#'>コード作成</md-button>
-      <md-button class="sideNavCodeButton" href='#/code'>みんなのコード</md-button>
+    <md-button class="pageButton"  href="#/home">ホーム</md-button>
+    <md-button class="pageButton" href='#'>コード作成</md-button>
+    <md-button class="pageButton" href='#/code'>みんなのコード</md-button>
 </md-sidenav>
 
 
@@ -50,7 +52,7 @@ export default {
 h2{
   margin: 0;
 }
-.sideNavHomeButton{
+.pageButton{
   display: block;
 }
 
