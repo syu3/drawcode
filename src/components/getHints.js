@@ -1,4 +1,4 @@
-export default function getHints (selectedBlock) {
+export default function getHints(selectedBlock) {
   var hints = []
   if (selectedBlock != null) {
     if (selectedBlock.name === 'p') {
@@ -56,8 +56,8 @@ export default function getHints (selectedBlock) {
         name: 'テキスト'
       })
     } else if (
-      selectedBlock.name === 'テキスト' ||
-      selectedBlock.content === 'テキスト'
+      selectedBlock.type === 'value' ||
+      selectedBlock.type === 'text'
     ) {
       console.log('hi')
       // 「テキスト」を表示

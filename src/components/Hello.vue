@@ -1,6 +1,11 @@
 <template>
   <div class="hello">
     <div class="blocks"　v-for="blocks in blocksArray">
+      <!-- <span>{{blocks}}</span>
+      <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
+
+
+
       <!-- <md-button class="md-raised md-primary block">p</md-button>
       <md-icon>trending_flat</md-icon>
       <md-button class="md-raised md-primary block">&gt;</md-button>
@@ -18,9 +23,9 @@
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}<i class="material-icons editButton" @click='editBlock(block,"value")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -103,6 +108,27 @@ export default {
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, { type: 'newLine' })
       }
+
+      // var blocksArray = [
+      //   [{ type: 'tag', name: 'p' }, { type: 'endTag', name: '>' }],
+      //   [{ type: 'tag', name: 'a' }, { type: 'endTag', name: '>' }]
+      // ]
+      //
+      // blocksArray.push([{ type: 'tag', name: 'center' }])
+      console.log(this.blocks)
+    },
+    editBlock(block, type) {
+      console.log('faefa', block)
+      var userText = window.prompt('変更したいテキストを入力してください')
+      // var index = block.indexOf("{type:'text',content:")
+      // block.splice(index + 1, index + 1, 'afejaofj')
+      if (type === 'text') {
+        block.content = userText
+      } else {
+        block.name = userText
+      }
+      console.log('ajgoiajgfajoijfaogjaoeijago;ajgeai', userText)
+      console.log('fajfioafmjaoifoa;wgmaokgmioegjaowga;', block)
     }
   },
   computed: {
@@ -166,4 +192,11 @@ a {
   right: 0px;
 }
 
+.editButton{
+  position: relative;
+  right: 0px;
+  top: 5px;
+  left: 10px;
+  width: 20px;
+}
 </style>
