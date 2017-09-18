@@ -6,14 +6,16 @@ export default function getHints(selectedBlock) {
       // 「テキスト」を表示
       hints.push({
         type: 'endTag',
-        name: '>'
+        name: '>',
+        comment: '閉じる'
       })
     } else if (selectedBlock.name === 'a') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'attribute',
-        name: 'href'
+        name: 'href',
+        comment: 'URLを入力'
       })
     } else if (selectedBlock.name === 'HTML') {
       console.log('html')
@@ -63,33 +65,39 @@ export default function getHints(selectedBlock) {
       // 「テキスト」を表示
       hints.push({
         type: 'endTag',
-        name: '>'
+        name: '>',
+        comment: '閉じる'
       })
       hints.push({
         type: 'tag',
-        name: 'br'
+        name: 'br',
+        comment: '文字を改行'
       })
       hints.push({
         type: 'closeTag',
-        name: '/p'
+        name: '/p',
+        comment: 'pタグを閉じる'
       })
       hints.push({
         type: 'closeTag',
-        name: '/a'
+        name: '/a',
+        comment: 'aタグを閉じる'
       })
     } else if (selectedBlock.name === 'br') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'endTag',
-        name: '>'
+        name: '>',
+        comment: '閉じる'
       })
     } else if (selectedBlock.name === '>') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'text',
-        content: 'テキスト'
+        content: 'テキスト',
+        comment: '・文字を入力'
       })
     } else if (selectedBlock.type === 'newLine') {
       console.log('hi')
