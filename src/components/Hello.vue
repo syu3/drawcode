@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
     <div class="blocks"　v-for="blocks in blocksArray">
-      <!-- <span>{{blocks}}</span>
-      <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
+      <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
 
 
 
@@ -47,6 +46,7 @@
               <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
               <span v-if="hint.type=='root'">{{hint.name}}</span>
               <span class="comment">{{hint.comment}}</span>
+              <span v-if="hint.type=='newLine'">{{hint.name}}</span>
 
             </md-menu-item>
           </div>
@@ -138,8 +138,16 @@ export default {
       return hints
     },
     blocksArray() {
-      return [this.blocks]
-      // 改行ごとに、区切る
+      const blocksArray = [[]]
+      let index = 0
+      for (let block of this.blocks) {
+        blocksArray[index].push(block)
+        if (block.type === 'newLine') {
+          index++
+          blocksArray[index] = []
+        }
+      }
+      return blocksArray
     }
   }
 }

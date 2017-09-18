@@ -91,6 +91,39 @@ export default function getHints(selectedBlock) {
         type: 'text',
         content: 'テキスト'
       })
+    } else if (selectedBlock.type === 'newLine') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'tag',
+        name: 'a',
+        comment: 'リンク'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'p',
+        comment: '文字'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'img',
+        comment: '画像'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'button',
+        comment: 'ボタン'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'hr',
+        comment: '線'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'h1',
+        comment: '題名'
+      })
     } else if (selectedBlock.name === '') {
       console.log('hi')
       // 「テキスト」を表示
