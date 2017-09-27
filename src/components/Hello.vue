@@ -143,7 +143,8 @@ export default {
       var previewArray = getPreview(this.blocks)
 
       console.log(previewArray)
-
+      var previewString = previewArray.join(',').replace(/,/g, ' ')
+      window.alert(previewString)
       // console.log(this.blocks.toString())
       // if (this.blocks.type == {type:}) {
       // var encodeCode =
