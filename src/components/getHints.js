@@ -37,7 +37,7 @@ export default function getHints(selectedBlock) {
       })
       hints.push({
         type: 'tag',
-        name: 'button',
+        name: 'input',
         comment: 'ボタン'
       })
       hints.push({
@@ -55,12 +55,9 @@ export default function getHints(selectedBlock) {
       // 「テキスト」を表示
       hints.push({
         type: 'value',
-        name: 'テキスト'
+        value: '画像'
       })
-    } else if (
-      selectedBlock.type === 'value' ||
-      selectedBlock.type === 'text'
-    ) {
+    } else if (selectedBlock.type === 'text') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
@@ -83,6 +80,14 @@ export default function getHints(selectedBlock) {
         name: '/a',
         comment: 'aタグを閉じる'
       })
+    } else if (selectedBlock.type === 'value') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
     } else if (selectedBlock.name === 'br') {
       console.log('hi')
       // 「テキスト」を表示
@@ -97,7 +102,7 @@ export default function getHints(selectedBlock) {
       hints.push({
         type: 'text',
         content: 'テキスト',
-        comment: '・文字を入力'
+        comment: '文字を入力'
       })
     } else if (selectedBlock.type === 'newLine') {
       console.log('hi')
@@ -119,7 +124,7 @@ export default function getHints(selectedBlock) {
       })
       hints.push({
         type: 'tag',
-        name: 'button',
+        name: 'input',
         comment: 'ボタン'
       })
       hints.push({
@@ -132,12 +137,66 @@ export default function getHints(selectedBlock) {
         name: 'h1',
         comment: '題名'
       })
+    } else if (selectedBlock.name === 'img') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attribute',
+        name: 'src',
+        comment: '画像を指定'
+      })
+    } else if (selectedBlock.name === 'src') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'value',
+        value: '画像',
+        comment: '画像の名前'
+      })
+    } else if (selectedBlock.name === 'input') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attribute',
+        name: 'type',
+        comment: '種類を指定'
+      })
+    } else if (selectedBlock.name === 'type') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'value',
+        value: 'button',
+        comment: 'ボタンを作る'
+      })
+      hints.push({
+        type: 'value',
+        value: 'text',
+        comment: 'フォーム'
+      })
+    } else if (selectedBlock.name === 'button') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attribute',
+        name: 'onclick',
+        comment: 'ボタンが押されたら'
+      })
+    } else if (selectedBlock.name === 'onclick') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'value',
+        value: 'https;//www.google.com',
+        comment: 'URLを入力'
+      })
     } else if (selectedBlock.name === '') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: '',
-        name: ''
+        name: '',
+        comment: ''
       })
     }
 

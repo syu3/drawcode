@@ -1,4 +1,9 @@
 <template>
+  <!-- <md-toolbar>
+    <md-button class="md-raised">保存</md-button>
+    <md-button class="md-raised">プレビュー</md-button>
+    <md-button class="md-raised md-warn">公開</md-button>
+  </md-toolbar> -->
   <div class="hello">
     <div class="blocks"　v-for="blocks in blocksArray">
       <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
@@ -24,7 +29,7 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.name}}<i class="material-icons editButton" @click='editBlock(block,"value")'>edit</i></md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -35,25 +40,26 @@
 
         <!-- <h1 v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</h1>
         <h1 v-if="block.type=='text'" md-menu-trigger>{{block.content}}</h1> -->
-        <md-menu-content>
+        <md-menu-content style="width:300px;">
           <div class="hint-container">
             <md-menu-item  v-on:selected="addBlock(hint)" v-for="hint in hints">
               <span v-if="hint.type=='tag'">{{"<"+hint.name}}</span>
               <span v-if="hint.type=='text'">{{hint.content}}</span>
               <span v-if="hint.type=='attribute'">{{hint.name}}</span>
-              <span v-if="hint.type=='value'">{{hint.name}}</span>
+              <span v-if="hint.type=='value'">{{hint.value}}</span>
               <span v-if="hint.type=='endTag'">{{hint.name}}</span>
               <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
               <span v-if="hint.type=='root'">{{hint.name}}</span>
               <span class="comment">{{hint.comment}}</span>
               <span v-if="hint.type=='newLine'">{{hint.name}}</span>
 
+
             </md-menu-item>
           </div>
           <md-button @click="removeBlock(block)" class="md-raised md-primary" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
-          <md-menu-item v-on:selected="newLine()">
+          <md-menu-item v-on:selected="preview()">
             <span>新しく書く</span>
           </md-menu-item>
 
@@ -63,10 +69,14 @@
       </md-menu>
     </div>
   </div>
+  <!-- <div class="home">
+    <md-button>アイウエオ</md-button>
+  </div> -->
 </template>
 
 <script>
 import getHints from './getHints'
+import getPreview from './getPreview'
 
 export default {
   name: 'hello',
@@ -104,6 +114,7 @@ export default {
       }
     },
     newLine() {
+      console.log('アイウエオ', this.blocks)
       var index = this.blocks.indexOf(this.selectedBlock)
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, { type: 'newLine' })
@@ -117,7 +128,7 @@ export default {
       // blocksArray.push([{ type: 'tag', name: 'center' }])
       console.log(this.blocks)
     },
-    editBlock(block, type) {
+    editBlock(block, type, value) {
       console.log('faefa', block)
       var userText = window.prompt('変更したいテキストを入力してください')
       // var index = block.indexOf("{type:'text',content:")
@@ -125,10 +136,19 @@ export default {
       if (type === 'text') {
         block.content = userText
       } else {
-        block.name = userText
+        block.value = userText
       }
-      console.log('ajgoiajgfajoijfaogjaoeijago;ajgeai', userText)
-      console.log('fajfioafmjaoifoa;wgmaokgmioegjaowga;', block)
+    },
+    preview() {
+      var previewArray = getPreview(this.blocks)
+
+      console.log(previewArray)
+
+      // console.log(this.blocks.toString())
+      // if (this.blocks.type == {type:}) {
+      // var encodeCode =
+      // console.log('ハローハロー')
+      // }
     }
   },
   computed: {
