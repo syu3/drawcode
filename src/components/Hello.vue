@@ -1,10 +1,10 @@
 <template>
-  <!-- <md-toolbar>
-    <md-button class="md-raised">保存</md-button>
-    <md-button class="md-raised">プレビュー</md-button>
-    <md-button class="md-raised md-warn">公開</md-button>
-  </md-toolbar> -->
   <div class="hello">
+    <md-toolbar>
+      <md-button class="md-raised">保存</md-button>
+      <md-button class="md-raised" @click="preview()">プレビュー</md-button>
+      <md-button class="md-raised md-warn">公開</md-button>
+    </md-toolbar>
     <div class="blocks"　v-for="blocks in blocksArray">
       <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
 
@@ -59,7 +59,7 @@
           <md-button @click="removeBlock(block)" class="md-raised md-primary" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
-          <md-menu-item v-on:selected="preview()">
+          <md-menu-item v-on:selected="newLine()">
             <span>新しく書く</span>
           </md-menu-item>
 

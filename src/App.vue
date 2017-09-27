@@ -6,9 +6,6 @@
       </md-button>
       <h2 class="md-title" style="flex:1">DrawCode</h2>
 
-      <md-button class="md-raised">保存</md-button>
-      <md-button class="md-raised">プレビュー</md-button>
-      <md-button class="md-raised md-warn">公開</md-button>
     </md-toolbar>
 
 <md-sidenav class="md-left" ref="leftSidenav">
