@@ -2,7 +2,7 @@
   <div class="hello">
     <md-toolbar>
       <md-button class="md-raised">保存</md-button>
-      <md-button class="md-raised" @click="preview()">プレビュー</md-button>
+      <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
       <md-button class="md-raised md-warn">公開</md-button>
     </md-toolbar>
     <div class="blocks"　v-for="blocks in blocksArray">
@@ -67,6 +67,13 @@
 
         </md-menu-content>
       </md-menu>
+      <md-dialog-alert
+        :md-title="alert2.title"
+        :md-content-html="alert2.contentHtml"
+        @open="onOpen"
+        @close="onClose"
+        ref="dialog4">
+      </md-dialog-alert>
     </div>
   </div>
   <!-- <div class="home">
@@ -88,10 +95,24 @@ export default {
           name: 'HTML'
         }
       ],
-      selectedBlock: null
+      selectedBlock: null,
+      alert2: {
+        title: 'Post created!',
+        contentHtml:
+          'Your post <strong>Material Design is awesome</strong> has been created.'
+      }
     }
   },
   methods: {
+    closeDialog(ref) {
+      this.$refs[ref].close()
+    },
+    onOpen() {
+      console.log('Opened')
+    },
+    onClose(type) {
+      console.log('Closed', type)
+    },
     showHitns() {
       this.$refs.menu.open()
     },
@@ -139,12 +160,18 @@ export default {
         block.value = userText
       }
     },
-    preview() {
+    preview(ref) {
       var previewArray = getPreview(this.blocks)
 
       console.log(previewArray)
       var previewString = previewArray.join(',').replace(/,/g, ' ')
-      window.alert(previewString)
+      // window.alert(previewString)
+      console.log(previewString)
+      console.log(ref)
+      console.log(this.$refs)
+      console.log(this.$refs.dialog4[0].open)
+      this.$refs.dialog4[0].open()
+      // this.$refs[ref].open()
       // var previewIframe = document.createElement('iframe')
       // previewIframe.position = 'absolute'
       // previewIframe.top = '0px'
