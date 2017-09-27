@@ -145,11 +145,14 @@ export default {
       console.log(previewArray)
       var previewString = previewArray.join(',').replace(/,/g, ' ')
       window.alert(previewString)
-      // console.log(this.blocks.toString())
-      // if (this.blocks.type == {type:}) {
-      // var encodeCode =
-      // console.log('ハローハロー')
-      // }
+      // var previewIframe = document.createElement('iframe')
+      // previewIframe.position = 'absolute'
+      // previewIframe.top = '0px'
+      // previewIframe.left = '0px'
+      // previewIframe.width = '500px'
+      // previewIframe.height = '500px'
+      // previewIframe.zIndex = '1000' /* 手前に表示 */
+      // document.body.appendChild(previewIframe)
     }
   },
   computed: {
