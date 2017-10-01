@@ -1,9 +1,12 @@
 <template>
   <div class="hello">
     <md-toolbar>
-      <md-button class="md-raised">保存</md-button>
+      <md-button class="md-raised md-warn" @click='reload()'>読み込む</md-button>
+      <md-button class="md-raised" @click="save()">保存</md-button>
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
       <md-button class="md-raised md-warn">公開</md-button>
+
+
     </md-toolbar>
     <div class="blocks"　v-for="blocks in blocksArray">
       <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
@@ -30,6 +33,7 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" @click='editBlock(block,"youtubeValue" ,block.value)'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -68,13 +72,30 @@
         </md-menu-content>
       </md-menu>
       <md-dialog-alert
-        :md-title="alert2.title"
         :md-content-html="alert2.contentHtml"
         @open="onOpen"
         @close="onClose"
-        ref="dialog4">
+        ref="dialog4"
+        class="previewDialog"
+        >
+        <!-- <div :md-content-html="alert2.contentHtml" style="width:100%;">
+
+        </div> -->
       </md-dialog-alert>
+      <!-- <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog4" class="previewDialog">
+        <md-dialog-title>Lorem ipsum dolor sit amet</md-dialog-title>
+
+        <md-dialog-content >Nemo, nobis necessitatibus ut illo, ducimus ex.</md-dialog-content>
+
+        <md-dialog-actions>
+          <md-button class="md-primary" @click="closeDialog('dialog4')">Cancel</md-button>
+          <md-button class="md-primary" @click="closeDialog('dialog4')">Ok</md-button>
+        </md-dialog-actions>
+      </md-dialog> -->
+
     </div>
+    <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
+
   </div>
   <!-- <div class="home">
     <md-button>アイウエオ</md-button>
@@ -87,7 +108,7 @@ import getPreview from './getPreview'
 
 export default {
   name: 'hello',
-  data() {
+  data: function() {
     return {
       blocks: [
         {
@@ -97,36 +118,44 @@ export default {
       ],
       selectedBlock: null,
       alert2: {
-        title: 'Post created!',
-        contentHtml:
-          'Your post <strong>Material Design is awesome</strong> has been created.'
-      }
+        contentHtml: 'aefaew'
+      },
+      codeString: '',
+      saveString: ''
     }
   },
   methods: {
-    closeDialog(ref) {
+    closeDialog: function(ref) {
       this.$refs[ref].close()
     },
-    onOpen() {
+    onOpen: function() {
       console.log('Opened')
     },
-    onClose(type) {
+    onClose: function(type) {
       console.log('Closed', type)
     },
-    showHitns() {
+    showHitns: function() {
       this.$refs.menu.open()
     },
-    addBlock(block) {
+    addBlock: function(block) {
       console.log(this, block)
-
+      console.log(JSON.stringify(this.blocks))
+      // console.log(block)
       var index = this.blocks.indexOf(this.selectedBlock)
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, block)
       }
 
+      this.saveString = JSON.stringify(this.blocks)
+      console.log('aiueo', this.saveString)
+      var previewArray = getPreview(this.blocks)
+      // window.alert(previewArray)
+      // console.log(previewArray)
+      var codeString = previewArray.join(',').replace(/,/g, ' ')
+      this.codeString = codeString
       // this.blocks.push(block)
     },
-    removeBlock(block) {
+    removeBlock: function(block) {
       console.log(block)
 
       var index = this.blocks.indexOf(block)
@@ -134,13 +163,18 @@ export default {
         this.blocks.splice(index, 1)
       }
     },
-    newLine() {
+    newLine: function() {
       console.log('アイウエオ', this.blocks)
       var index = this.blocks.indexOf(this.selectedBlock)
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, { type: 'newLine' })
       }
-
+      var previewArray = getPreview(this.blocks)
+      console.log('this.blocks', this.blocks)
+      var codeString1 = previewArray.join(',').replace(/,/g, ' ')
+      this.codeString = codeString1.replace(/<br>/g, '\n')
+      console.log('codeString1', codeString1)
+      console.log(this.codeString)
       // var blocksArray = [
       //   [{ type: 'tag', name: 'p' }, { type: 'endTag', name: '>' }],
       //   [{ type: 'tag', name: 'a' }, { type: 'endTag', name: '>' }]
@@ -149,46 +183,69 @@ export default {
       // blocksArray.push([{ type: 'tag', name: 'center' }])
       console.log(this.blocks)
     },
-    editBlock(block, type, value) {
+    editBlock: function(block, type, value) {
       console.log('faefa', block)
       var userText = window.prompt('変更したいテキストを入力してください')
       // var index = block.indexOf("{type:'text',content:")
       // block.splice(index + 1, index + 1, 'afejaofj')
       if (type === 'text') {
         block.content = userText
+      } else if (type === 'youtubeValue') {
+        block.value = userText
       } else {
         block.value = userText
       }
-    },
-    preview(ref) {
       var previewArray = getPreview(this.blocks)
 
-      console.log(previewArray)
+      // console.log(previewArray)
+      var codeString = previewArray.join(',').replace(/,/g, ' ')
+      this.codeString = codeString
+    },
+    reload: function() {
+      console.log(JSON.parse(document.cookie.replace(/saveString=/g, '')))
+      var reloadArray = JSON.parse(document.cookie.replace(/saveString=/g, ''))
+      for (var i = 0; i < reloadArray.length; i++) {
+        console.log(reloadArray[i])
+        if (reloadArray[i].type === 'root') {
+        } else {
+          this.blocks.splice(i, 0, reloadArray[i])
+          var previewArray = getPreview(this.blocks)
+
+          var codeString = previewArray.join(',').replace(/,/g, ' ')
+          this.codeString = codeString
+          this.saveString = JSON.stringify(this.blocks)
+        }
+      }
+    },
+    preview: function(ref) {
+      console.log('thisblokcsは、', this.blocks)
+      var previewArray = getPreview(this.blocks)
+      console.log('previewArrayは、', previewArray)
       var previewString = previewArray.join(',').replace(/,/g, ' ')
-      // window.alert(previewString)
-      console.log(previewString)
-      console.log(ref)
-      console.log(this.$refs)
-      console.log(this.$refs.dialog4[0].open)
+      this.alert2.contentHtml =
+        '<div style="width:75vw; height:65vh;">' + previewString + '</div>'
+      console.log('afjioeaufoa', this.contentHtml)
       this.$refs.dialog4[0].open()
-      // this.$refs[ref].open()
-      // var previewIframe = document.createElement('iframe')
-      // previewIframe.position = 'absolute'
-      // previewIframe.top = '0px'
-      // previewIframe.left = '0px'
-      // previewIframe.width = '500px'
-      // previewIframe.height = '500px'
-      // previewIframe.zIndex = '1000' /* 手前に表示 */
-      // document.body.appendChild(previewIframe)
+    },
+    save: function() {
+      var date1, date2 // 日付データを格納する変数
+      var kigen = 30 // cookieの期限（今回は30日）
+      date1 = new Date()
+      date1.setTime(date1.getTime() + kigen * 24 * 60 * 60 * 1000)
+      date2 = date1.toGMTString()
+
+      console.log('保存するものは', this.saveString)
+      document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
+      // document.cookie = 'saveString=; max-age=0'
     }
   },
   computed: {
-    hints() {
+    hints: function() {
       console.log(this.selectedBlock)
       var hints = getHints(this.selectedBlock)
       return hints
     },
-    blocksArray() {
+    blocksArray: function() {
       const blocksArray = [[]]
       let index = 0
       for (let block of this.blocks) {
@@ -257,5 +314,9 @@ a {
   top: 5px;
   left: 10px;
   width: 20px;
+}
+
+.previewDialog>div{
+  width: 100%;
 }
 </style>

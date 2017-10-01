@@ -17,7 +17,10 @@ export default function getHints(selectedBlock) {
         name: 'href',
         comment: 'URLを入力'
       })
-    } else if (selectedBlock.name === 'HTML') {
+    } else if (
+      selectedBlock.name === 'HTML' ||
+      selectedBlock.type === 'newLine'
+    ) {
       console.log('html')
       // 「テキスト」を表示
       hints.push({
@@ -37,8 +40,8 @@ export default function getHints(selectedBlock) {
       })
       hints.push({
         type: 'tag',
-        name: 'input',
-        comment: 'ボタン'
+        name: 'iframe',
+        comment: 'youtubeを表示'
       })
       hints.push({
         type: 'tag',
@@ -49,6 +52,16 @@ export default function getHints(selectedBlock) {
         type: 'tag',
         name: 'h1',
         comment: '題名'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'center',
+        comment: '画面の中央に表示'
+      })
+      hints.push({
+        type: 'closeTag',
+        name: '/center',
+        comment: 'centerタグを閉じる'
       })
     } else if (selectedBlock.name === 'href') {
       console.log('hi')
@@ -80,13 +93,10 @@ export default function getHints(selectedBlock) {
         name: '/a',
         comment: 'aタグを閉じる'
       })
-    } else if (selectedBlock.type === 'value') {
-      console.log('hi')
-      // 「テキスト」を表示
       hints.push({
-        type: 'endTag',
-        name: '>',
-        comment: '閉じる'
+        type: 'closeTag',
+        name: '/h1',
+        comment: 'h1タグを閉じる'
       })
     } else if (selectedBlock.name === 'br') {
       console.log('hi')
@@ -104,39 +114,6 @@ export default function getHints(selectedBlock) {
         content: 'テキスト',
         comment: '文字を入力'
       })
-    } else if (selectedBlock.type === 'newLine') {
-      console.log('hi')
-      // 「テキスト」を表示
-      hints.push({
-        type: 'tag',
-        name: 'a',
-        comment: 'リンク'
-      })
-      hints.push({
-        type: 'tag',
-        name: 'p',
-        comment: '文字'
-      })
-      hints.push({
-        type: 'tag',
-        name: 'img',
-        comment: '画像'
-      })
-      hints.push({
-        type: 'tag',
-        name: 'input',
-        comment: 'ボタン'
-      })
-      hints.push({
-        type: 'tag',
-        name: 'hr',
-        comment: '線'
-      })
-      hints.push({
-        type: 'tag',
-        name: 'h1',
-        comment: '題名'
-      })
     } else if (selectedBlock.name === 'img') {
       console.log('hi')
       // 「テキスト」を表示
@@ -153,50 +130,61 @@ export default function getHints(selectedBlock) {
         value: '画像',
         comment: '画像の名前'
       })
-    } else if (selectedBlock.name === 'input') {
+      hints.push({
+        type: 'youtubeValue',
+        value: '動画のURL',
+        comment: '動画のURL'
+      })
+    } else if (selectedBlock.name === 'hr') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'attribute',
-        name: 'type',
-        comment: '種類を指定'
+        name: 'width',
+        comment: '横幅を指定'
       })
-    } else if (selectedBlock.name === 'type') {
+    } else if (selectedBlock.name === 'width') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'value',
-        value: 'button',
-        comment: 'ボタンを作る'
+        value: '〇〇px',
+        comment: '横幅を指定'
       })
+    } else if (
+      selectedBlock.type === 'value' &&
+      selectedBlock.type === 'youtubeValue'
+    ) {
+      console.log('hi')
+      // 「テキスト」を表示
       hints.push({
-        type: 'value',
-        value: 'text',
-        comment: 'フォーム'
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
       })
-    } else if (selectedBlock.name === 'button') {
+    } else if (selectedBlock.name === 'center') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
+    } else if (selectedBlock.name === 'h1') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
+    } else if (selectedBlock.name === 'iframe') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
         type: 'attribute',
-        name: 'onclick',
-        comment: 'ボタンが押されたら'
-      })
-    } else if (selectedBlock.name === 'onclick') {
-      console.log('hi')
-      // 「テキスト」を表示
-      hints.push({
-        type: 'value',
-        value: 'https;//www.google.com',
-        comment: 'URLを入力'
-      })
-    } else if (selectedBlock.name === '') {
-      console.log('hi')
-      // 「テキスト」を表示
-      hints.push({
-        type: '',
-        name: '',
-        comment: ''
+        name: 'src',
+        comment: '動画を指定する'
       })
     }
 
