@@ -1,261 +1,57 @@
 <template>
-  <div class="hello">
-    <md-toolbar>
-      <md-button class="md-raised">保存</md-button>
-      <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
-      <md-button class="md-raised md-warn">公開</md-button>
-    </md-toolbar>
-    <div class="blocks"　v-for="blocks in blocksArray">
-      <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
-
-
-
-      <!-- <md-button class="md-raised md-primary block">p</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">&gt;</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">テキスト</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">&lt;/p&gt;</md-button> -->
-
-
-      <!-- <md-button class="md-raised md-primary block" v-for="block in blocks" @click='showHitns'>
-        <h1 v-if="block.type=='tag'">{{ "<"+block.name }}</h1>
-        <h1 v-if="block.type=='text'">{{block.content}}</h1>
-      </md-button> -->
-
-
-      <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
-        <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='newLine'" md-menu-trigger >↩︎</md-button>
-
-
-        <br v-if="block.type=='newLine'">
-
-        <!-- <h1 v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</h1>
-        <h1 v-if="block.type=='text'" md-menu-trigger>{{block.content}}</h1> -->
-        <md-menu-content style="width:300px;">
-          <div class="hint-container">
-            <md-menu-item  v-on:selected="addBlock(hint)" v-for="hint in hints">
-              <span v-if="hint.type=='tag'">{{"<"+hint.name}}</span>
-              <span v-if="hint.type=='text'">{{hint.content}}</span>
-              <span v-if="hint.type=='attribute'">{{hint.name}}</span>
-              <span v-if="hint.type=='value'">{{hint.value}}</span>
-              <span v-if="hint.type=='endTag'">{{hint.name}}</span>
-              <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
-              <span v-if="hint.type=='root'">{{hint.name}}</span>
-              <span class="comment">{{hint.comment}}</span>
-              <span v-if="hint.type=='newLine'">{{hint.name}}</span>
-
-
-            </md-menu-item>
-          </div>
-          <md-button @click="removeBlock(block)" class="md-raised md-primary" v-if="block.type!='root'">
-            <span>削除</span>
-          </md-button>
-          <md-menu-item v-on:selected="newLine()">
-            <span>新しく書く</span>
-          </md-menu-item>
-
-<!-- v-if="hint.type=='root'" -->
-
-        </md-menu-content>
-      </md-menu>
-      <md-dialog-alert
-        :md-title="alert2.title"
-        :md-content-html="alert2.contentHtml"
-        @open="onOpen"
-        @close="onClose"
-        ref="dialog4">
-      </md-dialog-alert>
+  <div class="home" style="width:100%;height:93.3vh">
+    <div class="inner">
+      <p class="mainP">誰でも簡単、<span class="text-fix">無料でつくる</span><br>あなただけのホームページ</p>
+      <p class="subP">&nbsp;&nbsp;こだわりのデザイン、選りすぐりの機能、すべてが自分仕様。<br><br><br>&nbsp;&nbsp;世界でひとつだけの本格ホームページを作成しましょう。</p>
+      <center><md-button href="#" class="md-raised md-primary" style="width:150px;">今すぐ始める</md-button></center>
     </div>
   </div>
-  <!-- <div class="home">
-    <md-button>アイウエオ</md-button>
-  </div> -->
+
 </template>
 
 <script>
-import getHints from './getHints'
-import getPreview from './getPreview'
 
-export default {
-  name: 'hello',
-  data() {
-    return {
-      blocks: [
-        {
-          type: 'root',
-          name: 'HTML'
-        }
-      ],
-      selectedBlock: null,
-      alert2: {
-        title: 'Post created!',
-        contentHtml:
-          'Your post <strong>Material Design is awesome</strong> has been created.'
-      }
-    }
-  },
-  methods: {
-    closeDialog(ref) {
-      this.$refs[ref].close()
-    },
-    onOpen() {
-      console.log('Opened')
-    },
-    onClose(type) {
-      console.log('Closed', type)
-    },
-    showHitns() {
-      this.$refs.menu.open()
-    },
-    addBlock(block) {
-      console.log(this, block)
-
-      var index = this.blocks.indexOf(this.selectedBlock)
-      if (index >= 0) {
-        this.blocks.splice(index + 1, 0, block)
-      }
-
-      // this.blocks.push(block)
-    },
-    removeBlock(block) {
-      console.log(block)
-
-      var index = this.blocks.indexOf(block)
-      if (index >= 0) {
-        this.blocks.splice(index, 1)
-      }
-    },
-    newLine() {
-      console.log('アイウエオ', this.blocks)
-      var index = this.blocks.indexOf(this.selectedBlock)
-      if (index >= 0) {
-        this.blocks.splice(index + 1, 0, { type: 'newLine' })
-      }
-
-      // var blocksArray = [
-      //   [{ type: 'tag', name: 'p' }, { type: 'endTag', name: '>' }],
-      //   [{ type: 'tag', name: 'a' }, { type: 'endTag', name: '>' }]
-      // ]
-      //
-      // blocksArray.push([{ type: 'tag', name: 'center' }])
-      console.log(this.blocks)
-    },
-    editBlock(block, type, value) {
-      console.log('faefa', block)
-      var userText = window.prompt('変更したいテキストを入力してください')
-      // var index = block.indexOf("{type:'text',content:")
-      // block.splice(index + 1, index + 1, 'afejaofj')
-      if (type === 'text') {
-        block.content = userText
-      } else {
-        block.value = userText
-      }
-    },
-    preview(ref) {
-      var previewArray = getPreview(this.blocks)
-
-      console.log(previewArray)
-      var previewString = previewArray.join(',').replace(/,/g, ' ')
-      // window.alert(previewString)
-      console.log(previewString)
-      console.log(ref)
-      console.log(this.$refs)
-      console.log(this.$refs.dialog4[0].open)
-      this.$refs.dialog4[0].open()
-      // this.$refs[ref].open()
-      // var previewIframe = document.createElement('iframe')
-      // previewIframe.position = 'absolute'
-      // previewIframe.top = '0px'
-      // previewIframe.left = '0px'
-      // previewIframe.width = '500px'
-      // previewIframe.height = '500px'
-      // previewIframe.zIndex = '1000' /* 手前に表示 */
-      // document.body.appendChild(previewIframe)
-    }
-  },
-  computed: {
-    hints() {
-      console.log(this.selectedBlock)
-      var hints = getHints(this.selectedBlock)
-      return hints
-    },
-    blocksArray() {
-      const blocksArray = [[]]
-      let index = 0
-      for (let block of this.blocks) {
-        blocksArray[index].push(block)
-        if (block.type === 'newLine') {
-          index++
-          blocksArray[index] = []
-        }
-      }
-      return blocksArray
-    }
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+.home{
+  background-image: url("homeBack4.jpg");
+  /*width: 100%;*/
+  /* 画像を常に天地左右の中央に配置 */
+  background-position: center center;
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  /* 画像をタイル状に繰り返し表示しない */
+  background-repeat: no-repeat;
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
+  background-attachment: fixed;
 
-a {
-  color: #42b983;
-}
+  /* 表示するコンテナの大きさに基づいて、背景画像を調整 */
+  background-size: cover;
 
-.block{
-  text-transform: inherit;
+  /* 背景画像が読み込まれる前に表示される背景のカラー */
+  background-color: #464646;
 }
-
-.hint-container{
-  display: flex;
-  flex-direction: column;
-  max-height: 200px;
-  overflow-y:scroll;
-
+.mainP{
+  font-size: 3.645vmax;
+  line-height: 100%;
+  text-align: center;
+  color: black;
 }
-.hint-container::-webkit-scrollbar{width:5px;}/*バーの太さ*/
-.hint-container::-webkit-scrollbar-track{background:#dddddd;}/*バーの背景色*/
-.hint-container::-webkit-scrollbar-thumb{background:#2cc2e4;}/*バーの色*/
-.hint{
-  display: block;
+.subP{
+  font-size: 1.198vmax;
+  line-height: 100%;
+  text-align: center;
+    color: black;
 }
-
-.deleteButton{
-  display: flex;
-  flex-direction: column;
-}
-
-.comment{
-  right: 0px;
-}
-
-.editButton{
-  position: relative;
-  right: 0px;
-  top: 5px;
-  left: 10px;
-  width: 20px;
+.inner{
+  width: 100%;
+  min-width: 750px;
+  transition: opacity .3s linear;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 22.5%;
 }
 </style>
