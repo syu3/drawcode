@@ -5,8 +5,14 @@
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title" style="flex:1">DrawCode</h2>
-
+      <!-- <md-button-toggle md-single>
+        <md-button>Works</md-button>
+        <md-button>With</md-button>
+        <md-button>Text</md-button>
+        <md-button>Too</md-button>
+      </md-button-toggle> -->
     </md-toolbar>
+
 
 <md-sidenav class="md-left" ref="leftSidenav">
     <md-toolbar class="md-large">
@@ -56,4 +62,5 @@ h2{
 .sideNavCodeButton{
   display: block;
 }
+
 </style>
