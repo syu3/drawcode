@@ -9,24 +9,6 @@
 
     </md-toolbar>
     <div class="blocks"　v-for="blocks in blocksArray">
-      <!-- <span　v-if="blocks.indexOf("{type: 'newLine'}") != -1">{{blocks}}</span> -->
-
-
-
-      <!-- <md-button class="md-raised md-primary block">p</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">&gt;</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">テキスト</md-button>
-      <md-icon>trending_flat</md-icon>
-      <md-button class="md-raised md-primary block">&lt;/p&gt;</md-button> -->
-
-
-      <!-- <md-button class="md-raised md-primary block" v-for="block in blocks" @click='showHitns'>
-        <h1 v-if="block.type=='tag'">{{ "<"+block.name }}</h1>
-        <h1 v-if="block.type=='text'">{{block.content}}</h1>
-      </md-button> -->
-
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
@@ -120,7 +102,6 @@ export default {
       alert2: {
         contentHtml: 'aefaew'
       },
-      codeString: '',
       saveString: ''
     }
   },
@@ -148,11 +129,6 @@ export default {
 
       this.saveString = JSON.stringify(this.blocks)
       console.log('aiueo', this.saveString)
-      var previewArray = getPreview(this.blocks)
-      // window.alert(previewArray)
-      // console.log(previewArray)
-      var codeString = previewArray.join(',').replace(/,/g, ' ')
-      this.codeString = codeString
       // this.blocks.push(block)
     },
     removeBlock: function(block) {
@@ -169,19 +145,6 @@ export default {
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, { type: 'newLine' })
       }
-      var previewArray = getPreview(this.blocks)
-      console.log('this.blocks', this.blocks)
-      var codeString1 = previewArray.join(',').replace(/,/g, ' ')
-      this.codeString = codeString1.replace(/<br>/g, '\n')
-      console.log('codeString1', codeString1)
-      console.log(this.codeString)
-      // var blocksArray = [
-      //   [{ type: 'tag', name: 'p' }, { type: 'endTag', name: '>' }],
-      //   [{ type: 'tag', name: 'a' }, { type: 'endTag', name: '>' }]
-      // ]
-      //
-      // blocksArray.push([{ type: 'tag', name: 'center' }])
-      console.log(this.blocks)
     },
     editBlock: function(block, type, value) {
       console.log('faefa', block)
@@ -195,11 +158,11 @@ export default {
       } else {
         block.value = userText
       }
-      var previewArray = getPreview(this.blocks)
+      // var previewString = getPreview(this.blocks)
 
       // console.log(previewArray)
-      var codeString = previewArray.join(',').replace(/,/g, ' ')
-      this.codeString = codeString
+      // var codeString = previewArray.join(',').replace(/,/g, ' ')
+      // this.codeString = previewString
     },
     reload: function() {
       console.log(JSON.parse(document.cookie.replace(/saveString=/g, '')))
@@ -209,21 +172,16 @@ export default {
         if (reloadArray[i].type === 'root') {
         } else {
           this.blocks.splice(i, 0, reloadArray[i])
-          var previewArray = getPreview(this.blocks)
 
-          var codeString = previewArray.join(',').replace(/,/g, ' ')
-          this.codeString = codeString
           this.saveString = JSON.stringify(this.blocks)
         }
       }
     },
     preview: function(ref) {
       console.log('thisblokcsは、', this.blocks)
-      var previewArray = getPreview(this.blocks)
-      console.log('previewArrayは、', previewArray)
-      var previewString = previewArray.join(',').replace(/,/g, ' ')
+
       this.alert2.contentHtml =
-        '<div style="width:75vw; height:65vh;">' + previewString + '</div>'
+        '<div style="width:75vw; height:65vh;">' + this.codeString + '</div>'
       console.log('afjioeaufoa', this.contentHtml)
       this.$refs.dialog4[0].open()
     },
@@ -256,6 +214,10 @@ export default {
         }
       }
       return blocksArray
+    },
+    codeString: function() {
+      var preview = getPreview(this.blocks)
+      return preview
     }
   }
 }
