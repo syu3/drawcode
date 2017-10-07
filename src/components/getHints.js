@@ -55,6 +55,11 @@ export default function getHints(selectedBlock) {
       })
       hints.push({
         type: 'tag',
+        name: 'h2',
+        comment: 'サブ題名'
+      })
+      hints.push({
+        type: 'tag',
         name: 'center',
         comment: '画面の中央に表示'
       })
@@ -98,6 +103,11 @@ export default function getHints(selectedBlock) {
         name: '/h1',
         comment: 'h1タグを閉じる'
       })
+      hints.push({
+        type: 'closeTag',
+        name: '/h2',
+        comment: 'h2タグを閉じる'
+      })
     } else if (selectedBlock.name === 'br') {
       console.log('hi')
       // 「テキスト」を表示
@@ -109,6 +119,11 @@ export default function getHints(selectedBlock) {
     } else if (selectedBlock.name === '>') {
       console.log('hi')
       // 「テキスト」を表示
+      hints.push({
+        type: 'closeTag',
+        name: '/iframe',
+        comment: 'iframeタグを閉じる'
+      })
       hints.push({
         type: 'text',
         content: 'テキスト',
@@ -151,12 +166,40 @@ export default function getHints(selectedBlock) {
         value: '〇〇px',
         comment: '横幅を指定'
       })
-    } else if (
-      selectedBlock.type === 'value' &&
-      selectedBlock.type === 'youtubeValue'
-    ) {
+    } else if (selectedBlock.name === 'height') {
       console.log('hi')
       // 「テキスト」を表示
+      hints.push({
+        type: 'value',
+        value: '〇〇px',
+        comment: '縦幅を指定'
+      })
+    } else if (selectedBlock.type === 'value') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attribute',
+        name: 'width',
+        comment: '横幅を指定'
+      })
+      hints.push({
+        type: 'attribute',
+        name: 'height',
+        comment: '縦幅を指定'
+      })
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
+    } else if (selectedBlock.type === 'youtubeValue') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attribute',
+        name: 'width',
+        comment: '横幅指定'
+      })
       hints.push({
         type: 'endTag',
         name: '>',
@@ -171,6 +214,14 @@ export default function getHints(selectedBlock) {
         comment: '閉じる'
       })
     } else if (selectedBlock.name === 'h1') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
+    } else if (selectedBlock.name === 'h2') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({

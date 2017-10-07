@@ -76,6 +76,7 @@
       </md-dialog> -->
 
     </div>
+    <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
     <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
 
   </div>
@@ -83,7 +84,7 @@
     <md-button>アイウエオ</md-button>
   </div> -->
 </template>
-
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
 import getHints from './getHints'
 import getPreview from './getPreview'
@@ -127,8 +128,6 @@ export default {
         this.blocks.splice(index + 1, 0, block)
       }
 
-      this.saveString = JSON.stringify(this.blocks)
-      console.log('aiueo', this.saveString)
       // this.blocks.push(block)
     },
     removeBlock: function(block) {
@@ -154,9 +153,21 @@ export default {
       if (type === 'text') {
         block.content = userText
       } else if (type === 'youtubeValue') {
-        block.value = userText
+        var url = userText
+        var id = url.split('watch?v=')[1].slice(0, 11)
+        window.alert(id)
+
+        var src = 'https://www.youtube.com/embed/' + id
+        // var youtubeIframe = document.createElement('iframe')
+        // youtubeIframe.src = src
+        // document.body.appendChild(youtubeIframe)
+        block.value = src
       } else {
-        block.value = userText
+        if (isNaN(userText) === false) {
+          block.value = userText + 'px'
+        } else {
+          block.value = userText
+        }
       }
       // var previewString = getPreview(this.blocks)
 
@@ -186,6 +197,8 @@ export default {
       this.$refs.dialog4[0].open()
     },
     save: function() {
+      this.saveString = JSON.stringify(this.blocks)
+      console.log('aiueo', this.saveString)
       var date1, date2 // 日付データを格納する変数
       var kigen = 30 // cookieの期限（今回は30日）
       date1 = new Date()

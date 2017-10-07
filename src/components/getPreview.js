@@ -12,7 +12,11 @@ export default function getPreview(blocks) {
       previewArray.push(blocks[i].name)
     }
     if (blocks[i].type === 'value') {
-      previewArray.push("='" + blocks[i].value + "'")
+      if (isNaN(blocks[i].value) === false) {
+        previewArray.push("='" + blocks[i].value + "px'")
+      } else {
+        previewArray.push("='" + blocks[i].value + "'")
+      }
     }
     if (blocks[i].type === 'endTag') {
       previewArray.push(blocks[i].name)
@@ -25,25 +29,8 @@ export default function getPreview(blocks) {
     if (blocks[i].type === 'newLine') {
       previewArray.push('<br>')
     }
-    if (blocks[i].value === 'youtubeValue') {
-      // url = blocks[i].value
-      // id = url.split('watch?v=')[1]
-      // src = 'https://www.youtube.com/embed/' + id
-      // $('iframe').attr('src', src)
-      // var url = blocks[i].value.replace('https://www.youtube.com/watch?v=', '')
-      // alert(url)
-      // /* IFrame Player APIのコードを非同期にロード */
-      // var tag = document.createElement('script')
-      // tag.src = '//www.youtube.com/iframe_api'
-      // var firstScriptTag = document.getElementsByTagName('script')[0]
-      // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
-      // /* APIコードがダウンロードされた後で、ifraemとYouTubeプレーヤー要素を生成 */
-      // var player
-      // var countup = function() {
-      //   window.alert(url)
-      //   onYouTubeIframeAPIReady(url)
-      // }
-      // setTimeout(countup, 1000)
+    if (blocks[i].type === 'youtubeValue') {
+      previewArray.push("='" + blocks[i].value + "'")
     }
   }
   var previewString = previewArray.join(' ')
