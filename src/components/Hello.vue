@@ -85,19 +85,20 @@
   </div> -->
 </template>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 <script>
 // Initialize Firebase
 var config = {
-  apiKey: 'AIzaSyCUDIyxCoEzVvnTc2enH_8cqKNdYq9b1Wg',
-  authDomain: 'fir-testproject-263bb.firebaseapp.com',
-  databaseURL: 'https://fir-testproject-263bb.firebaseio.com',
-  projectId: 'fir-testproject-263bb',
-  storageBucket: 'fir-testproject-263bb.appspot.com',
-  messagingSenderId: '644437751296'
+  apiKey: 'AIzaSyCEGoW5y4AqvBLD7s4I5n1W4YQqX3olLt4',
+  authDomain: 'drawcode-178921.firebaseapp.com',
+  databaseURL: 'https://drawcode-178921.firebaseio.com',
+  projectId: 'drawcode-178921',
+  storageBucket: 'drawcode-178921.appspot.com',
+  messagingSenderId: '836979890069'
 }
 firebase.initializeApp(config)
 </script>
+
 <script>
 import getHints from './getHints'
 import getPreview from './getPreview'
