@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
-    <md-toolbar>
+    <md-toolbar class="md-toolbar">
       <md-button class="md-raised md-warn" @click='reload()'>読み込む</md-button>
       <md-button class="md-raised" @click="save()">保存</md-button>
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
-      <md-button class="md-raised md-warn">公開</md-button>
+      <md-button class="md-raised md-warn" @click="upload()">公開</md-button>
 
 
     </md-toolbar>
@@ -85,6 +85,19 @@
   </div> -->
 </template>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+<script>
+// Initialize Firebase
+var config = {
+  apiKey: 'AIzaSyCUDIyxCoEzVvnTc2enH_8cqKNdYq9b1Wg',
+  authDomain: 'fir-testproject-263bb.firebaseapp.com',
+  databaseURL: 'https://fir-testproject-263bb.firebaseio.com',
+  projectId: 'fir-testproject-263bb',
+  storageBucket: 'fir-testproject-263bb.appspot.com',
+  messagingSenderId: '644437751296'
+}
+firebase.initializeApp(config)
+</script>
 <script>
 import getHints from './getHints'
 import getPreview from './getPreview'
@@ -208,6 +221,19 @@ export default {
       console.log('保存するものは', this.saveString)
       document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
       // document.cookie = 'saveString=; max-age=0'
+    },
+    upload: function() {
+      var userId = window.prompt(
+        'あなたの、名前と生年月日とサイト名をいれてください\n例）名前が「山田太郎」生年月日が「10月08日」サイト名が「自己紹介サイト」の場合→山田太郎1008自己紹介サイト'
+      )
+      console.log(userId)
+      var uploadString = this.codeString
+
+      // Get a reference to the database service
+      var database = firebase.database()
+      database.ref('users/' + userId).set({
+        code: uploadString
+      })
     }
   },
   computed: {
@@ -293,5 +319,12 @@ a {
 
 .previewDialog>div{
   width: 100%;
+}
+
+.md-toolbar{
+  margin-top: -64px;
+  margin-right: 0px;
+  width: 425px;
+  margin-left: auto;
 }
 </style>
