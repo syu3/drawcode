@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <md-toolbar>
+    <md-toolbar style="margin-top:0%;">
       <md-button class="md-icon-button" @click="toggleLeftSidenav">
         <md-icon>menu</md-icon>
       </md-button>
@@ -21,8 +21,8 @@
       </div>
 
     </md-toolbar>
-    <md-button class="pageButton"  href="#/home">ホーム</md-button>
-    <md-button class="pageButton" href='#'>コード作成</md-button>
+    <md-button class="pageButton"  href="#/">ホーム</md-button>
+    <md-button class="pageButton" href='#/edit'>コード作成</md-button>
     <md-button class="pageButton" href='#/code'>みんなのコード</md-button>
 </md-sidenav>
 

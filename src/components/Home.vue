@@ -3,7 +3,7 @@
     <div class="inner">
       <p class="mainP">誰でも簡単、<span class="text-fix">無料でつくる</span><br>あなただけのホームページ</p>
       <p class="subP">&nbsp;&nbsp;こだわりのデザイン、選りすぐりの機能、すべてが自分仕様。<br><br><br>&nbsp;&nbsp;世界でひとつだけの本格ホームページを作成しましょう。</p>
-      <center><md-button href="#" class="md-raised md-primary" style="width:150px;">今すぐ始める</md-button></center>
+      <center><md-button href="#/edit" class="md-raised md-primary" style="width:150px;">今すぐ始める</md-button></center>
     </div>
   </div>
 
