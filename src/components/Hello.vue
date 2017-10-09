@@ -1,3 +1,4 @@
+/* global firebase */
 <template>
   <div class="hello">
     <md-toolbar class="md-toolbar">
@@ -87,6 +88,7 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
 <script>
+/* global firebase */
 // Initialize Firebase
 var config = {
   apiKey: 'AIzaSyCEGoW5y4AqvBLD7s4I5n1W4YQqX3olLt4',
@@ -100,6 +102,7 @@ firebase.initializeApp(config)
 </script>
 
 <script>
+/* global firebase */
 import getHints from './getHints'
 import getPreview from './getPreview'
 
