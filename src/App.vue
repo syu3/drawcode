@@ -35,6 +35,7 @@
 </template>
 
 <script>
+console.log('app.vueです')
 export default {
   name: 'app',
   methods: {

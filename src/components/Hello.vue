@@ -85,21 +85,7 @@
     <md-button>アイウエオ</md-button>
   </div> -->
 </template>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
-<script>
-/* global firebase */
-// Initialize Firebase
-var config = {
-  apiKey: 'AIzaSyCEGoW5y4AqvBLD7s4I5n1W4YQqX3olLt4',
-  authDomain: 'drawcode-178921.firebaseapp.com',
-  databaseURL: 'https://drawcode-178921.firebaseio.com',
-  projectId: 'drawcode-178921',
-  storageBucket: 'drawcode-178921.appspot.com',
-  messagingSenderId: '836979890069'
-}
-firebase.initializeApp(config)
-</script>
+
 
 <script>
 /* global firebase */
@@ -231,13 +217,16 @@ export default {
         'あなたの、名前と生年月日とサイト名をいれてください\n例）名前が「山田太郎」生年月日が「10月08日」サイト名が「自己紹介サイト」の場合→山田太郎1008自己紹介サイト'
       )
       console.log(userId)
+      console.log('1')
       var uploadString = this.codeString
-
+      console.log('2')
       // Get a reference to the database service
       var database = firebase.database()
+      console.log('3')
       database.ref('users/' + userId).set({
         code: uploadString
       })
+      console.log('6')
     }
   },
   computed: {

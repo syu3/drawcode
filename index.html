@@ -5,10 +5,10 @@
     <title>drawcode</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
-  <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
-  <script>
-  /* global firebase */
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase-auth.js"></script>
+    <script>
+    /* global firebase */
 // Initialize Firebase
 var config = {
   apiKey: 'AIzaSyCEGoW5y4AqvBLD7s4I5n1W4YQqX3olLt4',
@@ -19,9 +19,12 @@ var config = {
   messagingSenderId: '836979890069'
 }
 firebase.initializeApp(config)
-var rootRef = firebase.database().ref()
-console.log(rootRef)
+console.log(firebase.initializeApp(config))
+// var rootRef = firebase.database().ref()
+// console.log(rootRef)
 </script>
+
+  </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
