@@ -23,7 +23,7 @@
     </md-toolbar>
     <md-button class="pageButton"  href="#/">ホーム</md-button>
     <md-button class="pageButton" href='#/edit'>コード作成</md-button>
-    <md-button class="pageButton" href='#/code'>みんなのコード</md-button>
+    <md-button class="pageButton" href='#/everyonecode'>みんなのコード</md-button>
 </md-sidenav>
 
 
@@ -35,7 +35,39 @@
 </template>
 
 <script>
+// /* global firebase */
 console.log('app.vueです')
+
+var countup = function() {
+  clearInterval(timer1)
+
+  var path = location.hash.replace(/#\u002f/g, '')
+  console.log(path)
+  console.log(typeof path)
+  if (path === 'edit' || path === '' || path === 'everyonecode') {
+  } else {
+    var encodePath = encodeURI(path)
+    console.log(
+      'https://drawcode-178921.firebaseio.com/users/' + encodePath + '.json'
+    )
+    fetch(
+      'https://drawcode-178921.firebaseio.com/users/' + encodePath + '.json'
+    )
+      .then(function(res) {
+        return res.text()
+      })
+      .then(function(text) {
+        // JSON.parse(text [, reviver])
+        var data = JSON.parse(text)
+
+        var iframe = document.createElement('iframe')
+        iframe.srcdoc = data['code']
+        iframe.style = 'position:relative; width:100%; height:100vh;'
+        document.body.appendChild(iframe)
+      })
+  }
+}
+var timer1 = setTimeout(countup, 100)
 export default {
   name: 'app',
   methods: {
