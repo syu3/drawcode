@@ -160,15 +160,18 @@ export default {
       console.log('Closed', type)
       // this.prompt.value = ''
     },
-    uploadClose: function() {
-      console.log(this.prompt.value)
-      var database = firebase.database()
-      console.log(database)
-      console.log('3')
-      database.ref('users/' + this.prompt.value).set({
-        code: this.codeString
-      })
-      this.$refs.uploadFinish[0].open()
+    uploadClose: function(type) {
+      console.log('typeは', type)
+      if (type !== 'cancel') {
+        console.log(this.prompt.value)
+        var database = firebase.database()
+        console.log(database)
+        console.log('3')
+        database.ref('users/' + this.prompt.value).set({
+          code: this.codeString
+        })
+        this.$refs.uploadFinish[0].open()
+      }
     },
     showHitns: function() {
       this.$refs.menu.open()
