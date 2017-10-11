@@ -2,7 +2,7 @@
 <template>
   <div class="hello">
     <md-toolbar class="md-toolbar">
-      <md-button class="md-raised md-warn" @click='reload()'>読み込む</md-button>
+      <md-button class="md-raised" @click='reload()'>読み込む</md-button>
       <md-button class="md-raised" @click="save()">保存</md-button>
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
       <md-button class="md-raised md-warn" @click="upload()">公開</md-button>
@@ -67,6 +67,27 @@
         >
 
       </md-dialog-alert>
+      <md-dialog-alert
+        :md-title="uploadFinishAlert.title"
+        :md-content="uploadFinishAlert.content+prompt.value"
+        :md-ok-text="uploadFinishAlert.ok"
+        @open="onOpen"
+        @close="onClose"
+        ref="uploadFinish"
+        class="previewDialog"
+        >
+
+      </md-dialog-alert>
+      <md-dialog-prompt
+        :md-title="prompt.title"
+        :md-ok-text="prompt.ok"
+        :md-cancel-text="prompt.cancel"
+        :md-input-placeholder="prompt.placeholder"
+        @open="onOpen"
+        @close="uploadClose"
+        v-model="prompt.value"
+        ref="dialog6">
+      </md-dialog-prompt>
       <!-- <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog4" class="previewDialog">
         <md-dialog-title>Lorem ipsum dolor sit amet</md-dialog-title>
 
@@ -108,10 +129,27 @@ export default {
       alert2: {
         contentHtml: 'aefaew'
       },
-      saveString: ''
+      uploadFinishAlert: {
+        title: 'サイトを公開しました',
+        content: 'あなたのサイトのURLは、https://drawcode.net/#/usersite/',
+        ok: '閉じる'
+      },
+      saveString: '',
+      prompt: {
+        title: '名前と生年月日とサイト名をいれてください',
+        ok: '公開する',
+        cancel: 'やめる',
+        id: 'name',
+        name: 'name',
+        placeholder: '例）山田太郎1022自己紹介サイト',
+        value: ''
+      }
     }
   },
   methods: {
+    cancel: function() {
+      window.alert('キャンセル')
+    },
     closeDialog: function(ref) {
       this.$refs[ref].close()
     },
@@ -120,6 +158,17 @@ export default {
     },
     onClose: function(type) {
       console.log('Closed', type)
+      // this.prompt.value = ''
+    },
+    uploadClose: function() {
+      console.log(this.prompt.value)
+      var database = firebase.database()
+      console.log(database)
+      console.log('3')
+      database.ref('users/' + this.prompt.value).set({
+        code: this.codeString
+      })
+      this.$refs.uploadFinish[0].open()
     },
     showHitns: function() {
       this.$refs.menu.open()
@@ -217,20 +266,22 @@ export default {
       // document.cookie = 'saveString=; max-age=0'
     },
     upload: function() {
-      var userId = window.prompt(
-        'あなたの、名前と生年月日とサイト名をいれてください\n例）名前が「山田太郎」生年月日が「10月08日」サイト名が「自己紹介サイト」の場合→山田太郎1008自己紹介サイト'
-      )
-      console.log(userId)
-      console.log('1')
-      var uploadString = this.codeString
-      console.log('2')
-      // Get a reference to the database service
-      var database = firebase.database()
-      console.log('3')
-      database.ref('users/' + userId).set({
-        code: uploadString
-      })
-      console.log('6')
+      this.$refs.dialog6[0].open()
+      // var userId = window.prompt(
+      //   'あなたの、名前と生年月日とサイト名をいれてください\n例）名前が「山田太郎」生年月日が「10月08日」サイト名が「自己紹介サイト」の場合→山田太郎1008自己紹介サイト'
+      // )
+
+      // console.log('1')
+      // var uploadString = this.codeString
+      // console.log('2')
+      // // Get a reference to the database service
+      // var database = firebase.database()
+      // console.log(database)
+      // console.log('3')
+      // database.ref('users/' + userId).set({
+      //   code: uploadString
+      // })
+      // console.log('6')
     }
   },
   computed: {
