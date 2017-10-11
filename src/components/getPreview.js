@@ -11,12 +11,18 @@ export default function getPreview(blocks) {
     if (blocks[i].type === 'attribute') {
       previewArray.push(blocks[i].name)
     }
+    if (blocks[i].type === 'attributeCSS') {
+      previewArray.push('{' + blocks[i].name)
+    }
     if (blocks[i].type === 'value') {
       if (isNaN(blocks[i].value) === false) {
         previewArray.push("='" + blocks[i].value + "px'")
       } else {
         previewArray.push("='" + blocks[i].value + "'")
       }
+    }
+    if (blocks[i].type === 'valueCSS') {
+      previewArray.push(':' + blocks[i].value + '}')
     }
     if (blocks[i].type === 'endTag') {
       previewArray.push(blocks[i].name)

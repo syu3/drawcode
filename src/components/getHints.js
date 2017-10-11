@@ -68,6 +68,19 @@ export default function getHints(selectedBlock) {
         name: '/center',
         comment: 'centerタグを閉じる'
       })
+      hints.push({
+        type: 'tag',
+        name: 'style',
+        comment: '背景画像・背景色'
+      })
+    } else if (selectedBlock.name === 'style') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'endTag',
+        name: '>',
+        comment: '閉じる'
+      })
     } else if (selectedBlock.name === 'href') {
       console.log('hi')
       // 「テキスト」を表示
@@ -115,7 +128,7 @@ export default function getHints(selectedBlock) {
         type: 'endTag',
         name: '>',
         comment: '閉じる'
-      })
+      }) // <style>body{background-color:red;}</style>
     } else if (selectedBlock.name === '>') {
       console.log('hi')
       // 「テキスト」を表示
@@ -128,6 +141,48 @@ export default function getHints(selectedBlock) {
         type: 'text',
         content: 'テキスト',
         comment: '文字を入力'
+      })
+      hints.push({
+        type: 'attribute',
+        name: 'body',
+        comment: '背景を指定'
+      })
+    } else if (selectedBlock.name === 'body') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'attributeCSS',
+        name: 'background-color',
+        comment: '背景色を指定'
+      })
+      hints.push({
+        type: 'attributeCSS',
+        name: 'background-image',
+        comment: '背景画像を指定'
+      })
+    } else if (selectedBlock.name === 'background-color') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'valueCSS',
+        value: '背景色を入力',
+        comment: '英語で色を入れる'
+      })
+    } else if (selectedBlock.name === 'background-image') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'valueCSS',
+        name: '背景画像を入力',
+        comment: '画像のURL'
+      })
+    } else if (selectedBlock.type === 'valueCSS') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'closeTag',
+        name: '/style',
+        comment: 'styleタグを閉じる'
       })
     } else if (selectedBlock.name === 'img') {
       console.log('hi')

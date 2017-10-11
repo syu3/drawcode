@@ -18,7 +18,7 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/usersite',
+      path: '/usersite/:id',
       name: 'userSite',
       component: userSite
     }

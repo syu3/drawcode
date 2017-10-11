@@ -15,8 +15,10 @@
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='attributeCSS'" md-menu-trigger>{{"{"+block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" @click='editBlock(block,"youtubeValue" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-primary block" v-if="block.type=='valueCSS'" md-menu-trigger>{{":"+block.value+"}"}}<i class="material-icons editButton" @click='editBlock(block,"valueCSS" ,block.value)'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -33,7 +35,9 @@
               <span v-if="hint.type=='tag'">{{"<"+hint.name}}</span>
               <span v-if="hint.type=='text'">{{hint.content}}</span>
               <span v-if="hint.type=='attribute'">{{hint.name}}</span>
+              <span v-if="hint.type=='attributeCSS'">{{hint.name}}</span>
               <span v-if="hint.type=='value'">{{hint.value}}</span>
+              <span v-if="hint.type=='valueCSS'">{{hint.value}}</span>
               <span v-if="hint.type=='endTag'">{{hint.name}}</span>
               <span v-if="hint.type=='closeTag'">{{"<" + hint.name + '>'}}</span>
               <span v-if="hint.type=='root'">{{hint.name}}</span>
@@ -61,9 +65,7 @@
         ref="dialog4"
         class="previewDialog"
         >
-        <!-- <div :md-content-html="alert2.contentHtml" style="width:100%;">
 
-        </div> -->
       </md-dialog-alert>
       <!-- <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog4" class="previewDialog">
         <md-dialog-title>Lorem ipsum dolor sit amet</md-dialog-title>
@@ -165,6 +167,8 @@ export default {
         // youtubeIframe.src = src
         // document.body.appendChild(youtubeIframe)
         block.value = src
+      } else if (type === 'valueCSS') {
+        block.value = userText
       } else {
         if (isNaN(userText) === false) {
           block.value = userText + 'px'
