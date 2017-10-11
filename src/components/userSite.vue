@@ -1,4 +1,47 @@
 <template>
+<div class="">
+<iframe :srcdoc="usersiteCode" class="usersiteIframe"></iframe>
+<p>{{usersiteCode}}</p>
+</div>
+</template>
+
+<script>
+/* global firebase */
+export default {
+  name: 'app',
+  data: function() {
+    return {
+      usersiteCode: '<p>テキスト</p>'
+    }
+  },
+  methods: {},
+  created: function() {
+    var usersiteCode = this.usersiteCode
+    // var userId = firebase.auth().currentUser.uid
+    return firebase
+      .database()
+      .ref('/users/' + this.$route.params.siteName)
+      .once('value')
+      .then(function(snapshot) {
+        console.log(snapshot.val().code)
+        console.log(usersiteCode)
+        usersiteCode = snapshot.val().code
+        console.log('aeiuo', usersiteCode)
+      })
+  }
+}
+</script>
+
+<style>
+.usersiteIframe{
+  position: relative;
+  width:100%;
+  height:90vh;
+}
+</style>
+
+<!-- <template>
+
 </template>
 <script>
 var countup = function() {
@@ -25,4 +68,4 @@ var countup = function() {
     })
 }
 var timer1 = setTimeout(countup, 100)
-</script>
+</script> -->
