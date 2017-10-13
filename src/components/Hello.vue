@@ -78,6 +78,15 @@
         >
 
       </md-dialog-alert>
+      <!-- <md-dialog-alert
+        :md-content="tutorialDialog.content"
+        @open="onOpen"
+        @close="onClose"
+        ref="tutorialDialog"
+        class="tutorialDialog"
+        >
+
+      </md-dialog-alert> -->
       <md-dialog-prompt
         :md-title="prompt.title"
         :md-ok-text="prompt.ok"
@@ -129,6 +138,9 @@ export default {
       alert2: {
         contentHtml: 'aefaew'
       },
+      // tutorialDialog: {
+      //   content: 'dada'
+      // },
       uploadFinishAlert: {
         title: 'サイトを公開しました',
         content: 'あなたのサイトのURLは、https://drawcode.net/#/usersite/',
@@ -235,7 +247,12 @@ export default {
       // this.codeString = previewString
     },
     reload: function() {
-      console.log(JSON.parse(document.cookie.replace(/saveString=/g, '')))
+      console.log('document.cookie', document.cookie)
+
+      console.log(
+        'JSON結果は、',
+        JSON.parse(document.cookie.replace(/saveString=/g, ''))
+      )
       var reloadArray = JSON.parse(document.cookie.replace(/saveString=/g, ''))
       for (var i = 0; i < reloadArray.length; i++) {
         console.log(reloadArray[i])
@@ -309,6 +326,10 @@ export default {
       var preview = getPreview(this.blocks)
       return preview
     }
+  },
+  created: function() {
+    // console.log('ハロー')
+    // this.$refs.tutorialDialog[0].open()
   }
 }
 </script>

@@ -26,7 +26,7 @@
     <md-button class="pageButton" href='#/everyonecode'>みんなのコード</md-button>
 </md-sidenav>
 
-
+    
 
 
     <router-view></router-view>

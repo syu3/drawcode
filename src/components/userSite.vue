@@ -1,7 +1,7 @@
 <template>
-<div class="">
-<iframe :srcdoc="usersiteCode" class="usersiteIframe"></iframe>
-<p>{{usersiteCode}}</p>
+<div style="height:100%;" v-html="usersiteCode">
+
+<!-- <iframe :srcdoc="usersiteCode" style="height:100vh;"　class="usersiteIframe"></iframe> -->
 </div>
 </template>
 
@@ -11,22 +11,18 @@ export default {
   name: 'app',
   data: function() {
     return {
-      usersiteCode: '<p>テキスト</p>'
+      usersiteCode: ''
     }
   },
   methods: {},
   created: function() {
-    var usersiteCode = this.usersiteCode
-    // var userId = firebase.auth().currentUser.uid
     return firebase
       .database()
       .ref('/users/' + this.$route.params.siteName)
       .once('value')
-      .then(function(snapshot) {
-        console.log(snapshot.val().code)
-        console.log(usersiteCode)
-        usersiteCode = snapshot.val().code
-        console.log('aeiuo', usersiteCode)
+      .then(snapshot => {
+        console.log('eefjaowej', snapshot.val().code)
+        this.usersiteCode = snapshot.val().code
       })
   }
 }
@@ -34,9 +30,9 @@ export default {
 
 <style>
 .usersiteIframe{
-  position: relative;
+  height: -webkit-fill-available;
   width:100%;
-  height:90vh;
+  height:100vh;
 }
 </style>
 
