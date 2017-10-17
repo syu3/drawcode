@@ -9,6 +9,12 @@
 
 
     </md-toolbar>
+    <!-- <ul class="share-buttons">
+      <li><a href="https://www.facebook.com/sharer/sharer.php?u=&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><img alt="Share on Facebook" src="images/flat_web_icon_set/color/Facebook.png" /></a></li>
+      <li><a href="https://twitter.com/intent/tweet?source=&text=:%20" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><img alt="Tweet" src="images/flat_web_icon_set/color/Twitter.png" /></a></li>
+      <li><a href="mailto:?subject=&body=:%20" target="_blank" title="Send email" onclick="window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' +  encodeURIComponent(document.URL)); return false;"><img alt="Send email" src="images/flat_web_icon_set/color/Email.png" /></a></li>
+    </ul> -->
+
     <div class="blocks"　v-for="blocks in blocksArray">
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
@@ -59,6 +65,14 @@
         </md-menu-content>
       </md-menu>
       <md-dialog-alert
+        :md-content-html="tutorialDialog.contentHtml"
+        @open="onOpen"
+        @close="onClose"
+        ref="tutorialDialog"
+        >
+
+      </md-dialog-alert>
+      <md-dialog-alert
         :md-content-html="alert2.contentHtml"
         @open="onOpen"
         @close="onClose"
@@ -66,7 +80,9 @@
         class="previewDialog"
         >
 
+
       </md-dialog-alert>
+
       <md-dialog-alert
         :md-title="uploadFinishAlert.title"
         :md-content="uploadFinishAlert.content+prompt.value"
@@ -74,19 +90,9 @@
         @open="onOpen"
         @close="onClose"
         ref="uploadFinish"
-        class="previewDialog"
         >
-
       </md-dialog-alert>
-      <!-- <md-dialog-alert
-        :md-content="tutorialDialog.content"
-        @open="onOpen"
-        @close="onClose"
-        ref="tutorialDialog"
-        class="tutorialDialog"
-        >
 
-      </md-dialog-alert> -->
       <md-dialog-prompt
         :md-title="prompt.title"
         :md-ok-text="prompt.ok"
@@ -138,12 +144,14 @@ export default {
       alert2: {
         contentHtml: 'aefaew'
       },
-      // tutorialDialog: {
-      //   content: 'dada'
-      // },
+      tutorialDialog: {
+        contentHtml:
+          '<md-boards class="md-primary" :md-controls="true"><md-board id="slide1"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p></md-board></md-boards>'
+      },
       uploadFinishAlert: {
         title: 'サイトを公開しました',
         content: 'あなたのサイトのURLは、https://drawcode.net/#/usersite/',
+        facebook: 'Facebookで共有',
         ok: '閉じる'
       },
       saveString: '',
@@ -208,6 +216,7 @@ export default {
       }
     },
     newLine: function() {
+      this.$refs.tutorialDialog[0].open()
       console.log('アイウエオ', this.blocks)
       var index = this.blocks.indexOf(this.selectedBlock)
       if (index >= 0) {
@@ -248,14 +257,16 @@ export default {
     },
     reload: function() {
       console.log('document.cookie', document.cookie)
-
-      console.log(
-        'JSON結果は、',
-        JSON.parse(document.cookie.replace(/saveString=/g, ''))
-      )
-      var reloadArray = JSON.parse(document.cookie.replace(/saveString=/g, ''))
+      var cookies = document.cookie.split('; ')
+      cookies.shift()
+      console.log('aeiceafwo', cookies)
+      // console.log('JSON結果は、', JSON.parse(cookies.replace(/saveString=/g, '')))
+      // var reloadArray = JSON.parse(cookies.replace(/saveString=/g, ''))
+      var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
+      console.log('JSON結果は、', reloadArray)
+      console.log(toString.call(reloadArray))
       for (var i = 0; i < reloadArray.length; i++) {
-        console.log(reloadArray[i])
+        // console.log(reloadArray[i])
         if (reloadArray[i].type === 'root') {
         } else {
           this.blocks.splice(i, 0, reloadArray[i])
@@ -274,7 +285,7 @@ export default {
     },
     save: function() {
       this.saveString = JSON.stringify(this.blocks)
-      console.log('aiueo', this.saveString)
+      console.log(this.saveString)
       var date1, date2 // 日付データを格納する変数
       var kigen = 30 // cookieの期限（今回は30日）
       date1 = new Date()
@@ -323,13 +334,10 @@ export default {
       return blocksArray
     },
     codeString: function() {
+      console.log('はいはいはいはいはい', this.blocks)
       var preview = getPreview(this.blocks)
       return preview
     }
-  },
-  created: function() {
-    // console.log('ハロー')
-    // this.$refs.tutorialDialog[0].open()
   }
 }
 </script>
@@ -349,7 +357,6 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-
 a {
   color: #42b983;
 }

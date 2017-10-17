@@ -38,6 +38,9 @@ export default function getPreview(blocks) {
     if (blocks[i].type === 'youtubeValue') {
       previewArray.push("='" + blocks[i].value + "'")
     }
+    if (blocks[i].type === 'br') {
+      previewArray.push('\n')
+    }
   }
   var previewString = previewArray.join(' ')
   return previewString

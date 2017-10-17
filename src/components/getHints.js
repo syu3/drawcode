@@ -51,12 +51,17 @@ export default function getHints(selectedBlock) {
       hints.push({
         type: 'tag',
         name: 'h1',
-        comment: '題名'
+        comment: '大きい文字'
       })
       hints.push({
         type: 'tag',
         name: 'h2',
-        comment: 'サブ題名'
+        comment: '２番目に大きい文字'
+      })
+      hints.push({
+        type: 'tag',
+        name: 'font',
+        comment: '文字の色'
       })
       hints.push({
         type: 'tag',
@@ -67,6 +72,11 @@ export default function getHints(selectedBlock) {
         type: 'closeTag',
         name: '/center',
         comment: 'centerタグを閉じる'
+      })
+      hints.push({
+        type: 'closeTag',
+        name: '/font',
+        comment: 'fontタグを閉じる'
       })
       hints.push({
         type: 'tag',
@@ -86,15 +96,30 @@ export default function getHints(selectedBlock) {
       // 「テキスト」を表示
       hints.push({
         type: 'value',
-        value: '画像'
+        value: '画像・URL'
       })
-    } else if (selectedBlock.type === 'text') {
+    } else if (selectedBlock.name === 'font') {
       console.log('hi')
       // 「テキスト」を表示
       hints.push({
-        type: 'endTag',
-        name: '>',
-        comment: '閉じる'
+        type: 'attribute',
+        name: 'color',
+        comment: '色を指定'
+      })
+    } else if (selectedBlock.name === 'color') {
+      console.log('hi')
+      // 「テキスト」を表示
+      hints.push({
+        type: 'value',
+        value: '文字の色',
+        comment: '英語で入力してください'
+      })
+    } else if (selectedBlock.type === 'text') {
+      console.log('hi')
+      hints.push({
+        type: 'closeTag',
+        name: '/center',
+        comment: 'centerタグを閉じる'
       })
       hints.push({
         type: 'tag',
