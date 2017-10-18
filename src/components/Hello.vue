@@ -8,6 +8,8 @@
       <md-button class="md-raised md-warn" @click="upload()">公開</md-button>
 
 
+
+
     </md-toolbar>
     <!-- <ul class="share-buttons">
       <li><a href="https://www.facebook.com/sharer/sharer.php?u=&t=" title="Share on Facebook" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><img alt="Share on Facebook" src="images/flat_web_icon_set/color/Facebook.png" /></a></li>
@@ -65,17 +67,7 @@
         </md-menu-content>
       </md-menu>
 
-      <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog1">
-        <md-boards class="md-primary" :md-controls="true">
-          <md-board id="slide1">
-            <img src="tutorialfirst.png">
-          </md-board>
-          <md-board id="slide2">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p>
-          </md-board>
-        </md-boards>
-      </md-dialog>
-      <md-button class="md-primary md-raised" id="custom" @click="openDialog('dialog1')">Custom</md-button>
+
 
 
       <md-dialog-alert
@@ -172,15 +164,16 @@ export default {
     cancel: function() {
       window.alert('キャンセル')
     },
-    closeDialog: function(ref) {
-      this.$refs[ref][0].close()
-    },
+
     onOpen: function() {
       console.log('Opened')
     },
     onClose: function(type) {
       console.log('Closed', type)
       // this.prompt.value = ''
+    },
+    closeDialog: function(ref) {
+      this.$refs[ref][0].close()
     },
     openDialog: function(refs) {
       console.log(this.$refs[refs])
@@ -408,7 +401,7 @@ a {
 
 .md-toolbar{
   margin-top: -64px;
-  margin-right: 0px;
+  margin-right: 10px;
   width: 425px;
   margin-left: auto;
 }
