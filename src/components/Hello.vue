@@ -64,14 +64,20 @@
 
         </md-menu-content>
       </md-menu>
-      <md-dialog-alert
-        :md-content-html="tutorialDialog.contentHtml"
-        @open="onOpen"
-        @close="onClose"
-        ref="tutorialDialog"
-        >
 
-      </md-dialog-alert>
+      <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog1">
+        <md-boards class="md-primary" :md-controls="true">
+          <md-board id="slide1">
+            <img src="tutorialfirst.png">
+          </md-board>
+          <md-board id="slide2">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p>
+          </md-board>
+        </md-boards>
+      </md-dialog>
+      <md-button class="md-primary md-raised" id="custom" @click="openDialog('dialog1')">Custom</md-button>
+
+
       <md-dialog-alert
         :md-content-html="alert2.contentHtml"
         @open="onOpen"
@@ -117,7 +123,6 @@
     </div>
     <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
     <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
-
   </div>
   <!-- <div class="home">
     <md-button>アイウエオ</md-button>
@@ -144,10 +149,7 @@ export default {
       alert2: {
         contentHtml: 'aefaew'
       },
-      tutorialDialog: {
-        contentHtml:
-          '<md-boards class="md-primary" :md-controls="true"><md-board id="slide1"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolorum quas amet cum vitae, omnis! Illum quas voluptatem, expedita iste, dicta ipsum ea veniam dolore in, quod saepe reiciendis nihil.</p></md-board></md-boards>'
-      },
+
       uploadFinishAlert: {
         title: 'サイトを公開しました',
         content: 'あなたのサイトのURLは、https://drawcode.net/#/usersite/',
@@ -171,7 +173,7 @@ export default {
       window.alert('キャンセル')
     },
     closeDialog: function(ref) {
-      this.$refs[ref].close()
+      this.$refs[ref][0].close()
     },
     onOpen: function() {
       console.log('Opened')
@@ -179,6 +181,10 @@ export default {
     onClose: function(type) {
       console.log('Closed', type)
       // this.prompt.value = ''
+    },
+    openDialog: function(refs) {
+      console.log(this.$refs[refs])
+      this.$refs[refs][0].open()
     },
     uploadClose: function(type) {
       console.log('typeは', type)

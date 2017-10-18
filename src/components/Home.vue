@@ -5,6 +5,7 @@
       <p class="subP">&nbsp;&nbsp;こだわりのデザイン、選りすぐりの機能、すべてが自分仕様。<br><br><br>&nbsp;&nbsp;世界でひとつだけの本格ホームページを作成しましょう。</p>
       <center><md-button href="#/edit" class="md-raised md-primary" style="width:150px;">今すぐ始める</md-button></center>
     </div>
+
   </div>
 
 </template>
