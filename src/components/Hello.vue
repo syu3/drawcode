@@ -144,18 +144,17 @@ export default {
 
       uploadFinishAlert: {
         title: 'サイトを公開しました',
-        content: 'あなたのサイトのURLは、https://drawcode.net/#/usersite/',
-        facebook: 'Facebookで共有',
+        content: 'あなたのサイトのURLは、 https://drawcode.net/#/usersite/',
         ok: '閉じる'
       },
       saveString: '',
       prompt: {
-        title: '名前と生年月日とサイト名をいれてください',
+        title: 'ニックネームをいれてください',
         ok: '公開する',
         cancel: 'やめる',
         id: 'name',
         name: 'name',
-        placeholder: '例）山田太郎1022自己紹介サイト',
+        placeholder: '例）',
         value: ''
       }
     }
@@ -203,7 +202,16 @@ export default {
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, block)
       }
+      this.saveString = JSON.stringify(this.blocks)
+      console.log(this.saveString)
+      var date1, date2 // 日付データを格納する変数
+      var kigen = 30 // cookieの期限（今回は30日）
+      date1 = new Date()
+      date1.setTime(date1.getTime() + kigen * 24 * 60 * 60 * 1000)
+      date2 = date1.toGMTString()
 
+      console.log('保存するものは', this.saveString)
+      document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
       // this.blocks.push(block)
     },
     removeBlock: function(block) {
@@ -215,7 +223,6 @@ export default {
       }
     },
     newLine: function() {
-      this.$refs.tutorialDialog[0].open()
       console.log('アイウエオ', this.blocks)
       var index = this.blocks.indexOf(this.selectedBlock)
       if (index >= 0) {
@@ -256,12 +263,12 @@ export default {
     },
     reload: function() {
       console.log('document.cookie', document.cookie)
-      var cookies = document.cookie.split('; ')
-      cookies.shift()
-      console.log('aeiceafwo', cookies)
+      // var cookies = document.cookie.split('; ')
+      // cookies.shift()
+      // console.log('aeiceafwo', cookies)
       // console.log('JSON結果は、', JSON.parse(cookies.replace(/saveString=/g, '')))
-      // var reloadArray = JSON.parse(cookies.replace(/saveString=/g, ''))
-      var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
+      var reloadArray = JSON.parse(document.cookie.replace(/saveString=/g, ''))
+      // var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
       console.log('JSON結果は、', reloadArray)
       console.log(toString.call(reloadArray))
       for (var i = 0; i < reloadArray.length; i++) {
@@ -337,7 +344,8 @@ export default {
       var preview = getPreview(this.blocks)
       return preview
     }
-  }
+  },
+  created: function() {}
 }
 </script>
 

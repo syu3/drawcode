@@ -30,7 +30,7 @@
     <md-button class="pageButton" href='#/everyonecode'>みんなのコード</md-button>
 </md-sidenav>
 
-<md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog1" style="width:100vw;">
+<md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
   <md-boards class="md-primary" :md-controls="true">
     <md-board id="slide1">
       <img src="./tutorialfirst.png">
@@ -56,6 +56,11 @@
 <script>
 export default {
   name: 'app',
+  data: function() {
+    return {
+      a: 'aieouo'
+    }
+  },
   methods: {
     toggleLeftSidenav() {
       this.$refs.leftSidenav.toggle()
@@ -66,8 +71,18 @@ export default {
     },
     openDialog: function(refs) {
       console.log(this)
+      console.log(this.$refs)
       this.$refs[refs].open()
+      // var refs = 'dialog1'
+      // console.log(this)
+      // this.$refs['refs'][0].open()
     }
+  },
+  created: function() {
+    console.log(this)
+    console.log(this.$refs)
+    console.log(this.$refs.dialog1)
+    this.$refs.dialog1[0].open()
   }
 }
 </script>
@@ -93,11 +108,9 @@ h2{
   height: 70%;
   object-fit: contain;
 }*/
-.md-boards-content {
-    height: 100vh;
 
-}
 .md-boards .md-boards-content {
+  height: 100vh;
   width: 100vh;
 }
 /*.tutorialIMG{

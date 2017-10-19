@@ -227,7 +227,7 @@ export default function getHints(selectedBlock) {
       })
       hints.push({
         type: 'youtubeValue',
-        value: '動画のURL',
+        value: 'https://www.youtube.com/embed/bm8wc7vvJU0',
         comment: '動画のURL'
       })
     } else if (selectedBlock.name === 'hr') {
