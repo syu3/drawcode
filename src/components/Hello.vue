@@ -69,22 +69,7 @@
       </md-menu>
 
 
-      <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
-        <md-boards class="md-primary" :md-controls="true">
-          <md-board id="slide1">
-            <img src="./tutorialfirst.png">
-          </md-board>
-          <md-board id="slide2">
-            <img src="./tutorial0.png">
-          </md-board>
-          <md-board id="slide3">
-            <img src="./tutorial1.png">
-          </md-board>
-          <md-board id="slide4">
-            <img src="./tutorial2.png">
-          </md-board>
-        </md-boards>
-      </md-dialog>
+
 
       <md-dialog-alert
         :md-content-html="alert2.contentHtml"
@@ -129,6 +114,22 @@
       </md-dialog> -->
 
     </div>
+    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
+      <md-boards class="md-primary" :md-controls="true">
+        <md-board id="slide1">
+          <img src="./tutorialfirst.png">
+        </md-board>
+        <md-board id="slide2">
+          <img src="./tutorial0.png">
+        </md-board>
+        <md-board id="slide3">
+          <img src="./tutorial1.png">
+        </md-board>
+        <md-board id="slide4">
+          <img src="./tutorial2.png">
+        </md-board>
+      </md-boards>
+    </md-dialog>
     <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
     <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
   </div>
@@ -371,8 +372,12 @@ export default {
     //     0:VueComponent {_uid: 39, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
     //      length:1
     //      __proto__:Array(0)
-    console.log(this.$refs.dialog1.open)
-    this.$refs.dialog1.open()
+    // console.log(this.$refs.dialog1.open)
+
+    var countup = () => {
+      this.$refs.dialog1.open()
+    }
+    setTimeout(countup, 100)
   }
 }
 </script>
