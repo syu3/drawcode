@@ -2,6 +2,7 @@
 <template>
   <div class="hello">
     <md-toolbar class="md-toolbar">
+      <md-button id="custom" @click="openDialog('dialog1')"><i class="material-icons" >info_outline</i></md-button>
       <md-button class="md-raised" @click='reload()'>読み込む</md-button>
       <md-button class="md-raised" @click="save()">保存</md-button>
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
@@ -68,7 +69,22 @@
       </md-menu>
 
 
-
+      <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
+        <md-boards class="md-primary" :md-controls="true">
+          <md-board id="slide1">
+            <img src="./tutorialfirst.png">
+          </md-board>
+          <md-board id="slide2">
+            <img src="./tutorial0.png">
+          </md-board>
+          <md-board id="slide3">
+            <img src="./tutorial1.png">
+          </md-board>
+          <md-board id="slide4">
+            <img src="./tutorial2.png">
+          </md-board>
+        </md-boards>
+      </md-dialog>
 
       <md-dialog-alert
         :md-content-html="alert2.contentHtml"
@@ -345,7 +361,19 @@ export default {
       return preview
     }
   },
-  created: function() {}
+  mounted: function() {
+    console.log(this)
+    // VueComponent {_uid: 17, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
+    console.log(this.$refs)
+    // {dialog1: Array(1), dialog4: Array(1), uploadFinish: Array(1), dialog6: Array(1)}
+    console.log(this.$refs.dialog1)
+    // [VueComponent]
+    //     0:VueComponent {_uid: 39, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
+    //      length:1
+    //      __proto__:Array(0)
+    console.log(this.$refs.dialog1.open)
+    this.$refs.dialog1.open()
+  }
 }
 </script>
 
@@ -410,7 +438,7 @@ a {
 .md-toolbar{
   margin-top: -64px;
   margin-right: 10px;
-  width: 425px;
+  width: 525px;
   margin-left: auto;
 }
 </style>

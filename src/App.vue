@@ -11,7 +11,6 @@
         <md-button>Text</md-button>
         <md-button>Too</md-button>
       </md-button-toggle> -->
-      <md-button id="custom" @click="openDialog('dialog1')" style="position:absolute; left:160px;"><i class="material-icons" >info_outline</i></md-button>
 
     </md-toolbar>
 
@@ -30,22 +29,7 @@
     <md-button class="pageButton" href='#/everyonecode'>みんなのコード</md-button>
 </md-sidenav>
 
-<md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
-  <md-boards class="md-primary" :md-controls="true">
-    <md-board id="slide1">
-      <img src="./tutorialfirst.png">
-    </md-board>
-    <md-board id="slide2">
-      <img src="./tutorial0.png">
-    </md-board>
-    <md-board id="slide3">
-      <img src="./tutorial1.png">
-    </md-board>
-    <md-board id="slide4">
-      <img src="./tutorial2.png">
-    </md-board>
-  </md-boards>
-</md-dialog>
+
 
 
     <router-view></router-view>
@@ -77,12 +61,6 @@ export default {
       // console.log(this)
       // this.$refs['refs'][0].open()
     }
-  },
-  created: function() {
-    console.log(this)
-    console.log(this.$refs)
-    console.log(this.$refs.dialog1)
-    this.$refs.dialog1[0].open()
   }
 }
 </script>
