@@ -193,7 +193,7 @@ export default {
     },
     openDialog: function(refs) {
       console.log(this.$refs[refs])
-      this.$refs[refs][0].open()
+      this.$refs[refs].open()
     },
     uploadClose: function(type) {
       console.log('typeは', type)
@@ -445,5 +445,8 @@ a {
   margin-right: 10px;
   width: 525px;
   margin-left: auto;
+}
+.md-dialog {
+  width: 100vw;
 }
 </style>
