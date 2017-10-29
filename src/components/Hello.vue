@@ -22,12 +22,12 @@
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attributeCSS'" md-menu-trigger>{{"{"+block.name}}</md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" @click='editBlock(block,"youtubeValue" ,block.value)'>edit</i></md-button>
-        <md-button class="md-raised md-primary block" v-if="block.type=='valueCSS'" md-menu-trigger>{{":"+block.value+"}"}}<i class="material-icons editButton" @click='editBlock(block,"valueCSS" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" @click='editBlock(block,"youtubeValue" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='valueCSS'" md-menu-trigger>{{":"+block.value+"}"}}<i class="material-icons editButton" @click='editBlock(block,"valueCSS" ,block.value)'>edit</i></md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -56,12 +56,12 @@
 
             </md-menu-item>
           </div>
-          <md-button @click="removeBlock(block)" class="md-raised md-primary" v-if="block.type!='root'">
+          <md-button @click="removeBlock(block)" class="md-raised md-accent" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
-          <md-menu-item v-on:selected="newLine()">
-            <span>新しく書く</span>
-          </md-menu-item>
+          <md-button v-on:selected="newLine()" class="md-raised md-primary">
+            <span>新しく書く（改行）</span>
+          </md-button>
 
 <!-- v-if="hint.type=='root'" -->
 
@@ -114,10 +114,11 @@
       </md-dialog> -->
 
     </div>
-    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;">
-      <md-boards class="md-primary" :md-controls="true">
-        <md-board id="slide1">
-          <img src="./tutorialfirst.png">
+    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
+      <md-boards :md-controls="true"  class="md-primary" >
+
+        <md-board id="slide1" >
+          <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png"></md-image>
         </md-board>
         <md-board id="slide2">
           <img src="./tutorial0.png">
@@ -130,8 +131,11 @@
         </md-board>
       </md-boards>
     </md-dialog>
+
     <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
     <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
+    <!-- <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">アイウエオアイウエオ<br>アイウエオアイウエオ<br>アイウエオアイウエオ<br>アイウエオアイウエオ<br>アイウエオアイウエオ<br>アイウエオアイウエオアイウエオアイウエオ<br>アイウエオアイウエオ<br>アイウエオアイウエオ</md-whiteframe> -->
+
   </div>
   <!-- <div class="home">
     <md-button>アイウエオ</md-button>
@@ -148,6 +152,7 @@ export default {
   name: 'hello',
   data: function() {
     return {
+      src1: './tutorialfirst.png',
       blocks: [
         {
           type: 'root',
@@ -229,6 +234,7 @@ export default {
 
       console.log('保存するものは', this.saveString)
       document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
+
       // this.blocks.push(block)
     },
     removeBlock: function(block) {
@@ -279,21 +285,40 @@ export default {
       // this.codeString = previewString
     },
     reload: function() {
-      console.log('document.cookie', document.cookie)
-      // var cookies = document.cookie.split('; ')
-      // cookies.shift()
-      // console.log('aeiceafwo', cookies)
-      // console.log('JSON結果は、', JSON.parse(cookies.replace(/saveString=/g, '')))
-      var reloadArray = JSON.parse(document.cookie.replace(/saveString=/g, ''))
-      // var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
-      console.log('JSON結果は、', reloadArray)
-      console.log(toString.call(reloadArray))
-      for (var i = 0; i < reloadArray.length; i++) {
-        // console.log(reloadArray[i])
-        if (reloadArray[i].type === 'root') {
-        } else {
-          this.blocks.splice(i, 0, reloadArray[i])
+      // console.log('document.cookie', document.cookie)
+      // // var cookies = document.cookie.split('; ')
+      // // cookies.shift()
+      // // console.log('aeiceafwo', cookies)
+      // console.log('JSON結果は、', document.coookie)
+      // var reloadArray = JSON.parse(document.cookie)
+      //
+      // // var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
+      // console.log('JSON結果は、', reloadArray)
+      // reloadArray.replace(/saveString=/g, '')
+      // console.log(toString.call(reloadArray))
 
+      var cookies = document.cookie
+      var cookieItem = cookies.split(';')
+      var cookieValue = ''
+      for (var i = 0; i < cookieItem.length; i++) {
+        var elem = cookieItem[i].split('=')
+        if (elem[0].trim() === 'saveString') {
+          cookieValue = unescape(elem[1])
+        } else {
+          continue
+        }
+      }
+      console.log(cookieValue)
+      console.log()
+      cookieValue = JSON.parse(cookieValue)
+      console.log(cookieValue)
+      for (i = 0; i < cookieValue.length; i++) {
+        // console.log(reloadArray[i])
+        if (cookieValue[i].type === 'root') {
+        } else {
+          console.log(cookieValue[i])
+          this.blocks.splice(i, 0, cookieValue[i])
+          console.log(this.blocks)
           this.saveString = JSON.stringify(this.blocks)
         }
       }
@@ -359,6 +384,9 @@ export default {
     codeString: function() {
       console.log('はいはいはいはいはい', this.blocks)
       var preview = getPreview(this.blocks)
+      // if (preview.match(/ <br> /)) {
+      //   preview = preview.replace(/ <br> /g, '<br>')
+      // }
       return preview
     }
   },

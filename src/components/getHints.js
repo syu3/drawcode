@@ -146,6 +146,11 @@ export default function getHints(selectedBlock) {
         name: '/h2',
         comment: 'h2タグを閉じる'
       })
+      hints.push({
+        type: 'closeTag',
+        name: '/font',
+        comment: 'fontタグを閉じる'
+      })
     } else if (selectedBlock.name === 'br') {
       console.log('hi')
       // 「テキスト」を表示

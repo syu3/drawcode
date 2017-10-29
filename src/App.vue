@@ -26,7 +26,7 @@
 
     <md-button class="pageButton"  href="#/">ホーム</md-button>
     <md-button class="pageButton" href='#/edit'>コード作成</md-button>
-    <md-button class="pageButton" href='#/everyonecode'>みんなのコード</md-button>
+    <md-button class="pageButton" href='#/everyOnecode'>みんなのコード</md-button>
 </md-sidenav>
 
 
