@@ -3,10 +3,10 @@
   <div class="hello">
     <md-toolbar class="md-toolbar">
       <md-button id="custom" @click="openDialog('dialog1')"><i class="material-icons" >info_outline</i></md-button>
-      <md-button class="md-raised" @click='reload()'>読み込む</md-button>
-      <md-button class="md-raised" @click="save()">保存</md-button>
+      <!-- <md-button class="md-raised" @click='reload()'>読み込む</md-button>
+      <md-button class="md-raised" @click="save()">保存</md-button> -->
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
-      <md-button class="md-raised md-warn" @click="upload()">公開</md-button>
+      <!-- <md-button class="md-raised md-warn" @click="upload()">公開</md-button> -->
 
 
 
@@ -22,12 +22,12 @@
 
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
-        <md-button class="md-raised md-warn block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attribute'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='attributeCSS'" md-menu-trigger>{{"{"+block.name}}</md-button>
-        <md-button class="md-raised md-warn block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" v-if="block.value!='button'" @click='editBlock(block,"value" ,block.value)'>edit</i></md-button>
-        <md-button class="md-raised md-warn block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}<i class="material-icons editButton" @click='editBlock(block,"youtubeValue" ,block.value)'>edit</i></md-button>
-        <md-button class="md-raised md-warn block" v-if="block.type=='valueCSS'" md-menu-trigger>{{":"+block.value+"}"}}<i class="material-icons editButton" @click='editBlock(block,"valueCSS" ,block.value)'>edit</i></md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='value'" md-menu-trigger>{{block.value}}</md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='youtubeValue'" md-menu-trigger>{{block.value}}</md-button>
+        <md-button class="md-raised md-warn block" v-if="block.type=='valueCSS'" md-menu-trigger>{{":"+block.value+"}"}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='endTag'" md-menu-trigger>{{block.name}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='closeTag'" md-menu-trigger>{{"<" + block.name + '>'}}</md-button>
         <md-button class="md-raised md-primary block" v-if="block.type=='root'" md-menu-trigger >{{block.name}}</md-button>
@@ -59,7 +59,7 @@
           <md-button @click="removeBlock(block)" class="md-raised md-accent" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
-          <md-button @click="newLine()" class="md-raised md-primary">
+          <md-button v-on:selected="newLine()" class="md-raised md-primary">
             <span>新しく書く（改行）</span>
           </md-button>
 
@@ -114,7 +114,7 @@
       </md-dialog> -->
 
     </div>
-    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" class="tutorialDialog" ref="dialog1" style="width:100vw; min-width: 50vw;" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
+    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
       <md-boards :md-controls="true"  class="md-primary" >
 
         <md-board id="slide1" >
@@ -171,14 +171,15 @@ export default {
       },
       saveString: '',
       prompt: {
-        title: 'サイト名をいれてください',
+        title: 'ニックネームをいれてください',
         ok: '公開する',
         cancel: 'やめる',
         id: 'name',
         name: 'name',
         placeholder: '例）',
         value: ''
-      }
+      },
+      userSiteCode: []
     }
   },
   methods: {
@@ -208,8 +209,7 @@ export default {
         console.log(database)
         console.log('3')
         database.ref('users/' + this.prompt.value).set({
-          code: this.codeString,
-          array: JSON.stringify(this.blocks)
+          code: this.codeString
         })
         this.$refs.uploadFinish[0].open()
       }
@@ -263,6 +263,7 @@ export default {
       } else if (type === 'youtubeValue') {
         var url = userText
         var id = url.split('watch?v=')[1].slice(0, 11)
+        window.alert(id)
 
         var src = 'https://www.youtube.com/embed/' + id
         // var youtubeIframe = document.createElement('iframe')
@@ -285,18 +286,6 @@ export default {
       // this.codeString = previewString
     },
     reload: function() {
-      // console.log('document.cookie', document.cookie)
-      // // var cookies = document.cookie.split('; ')
-      // // cookies.shift()
-      // // console.log('aeiceafwo', cookies)
-      // console.log('JSON結果は、', document.coookie)
-      // var reloadArray = JSON.parse(document.cookie)
-      //
-      // // var reloadArray = JSON.parse(cookies[0].replace(/saveString=/g, ''))
-      // console.log('JSON結果は、', reloadArray)
-      // reloadArray.replace(/saveString=/g, '')
-      // console.log(toString.call(reloadArray))
-
       var cookies = document.cookie
       var cookieItem = cookies.split(';')
       var cookieValue = ''
@@ -361,6 +350,18 @@ export default {
       //   code: uploadString
       // })
       // console.log('6')
+    },
+    everyOneSiteReload: function() {
+      for (var i = 0; i < this.usersiteCode.length; i++) {
+        // console.log(reloadArray[i])
+        if (this.usersiteCode[i].type === 'root') {
+        } else {
+          console.log(this.usersiteCode[i])
+          this.blocks.splice(i, 0, this.usersiteCode[i])
+          console.log(this.blocks)
+          this.saveString = JSON.stringify(this.blocks)
+        }
+      }
     }
   },
   computed: {
@@ -390,22 +391,54 @@ export default {
       return preview
     }
   },
-  mounted: function() {
-    console.log(this)
-    // VueComponent {_uid: 17, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
-    console.log(this.$refs)
-    // {dialog1: Array(1), dialog4: Array(1), uploadFinish: Array(1), dialog6: Array(1)}
-    console.log(this.$refs.dialog1)
-    // [VueComponent]
-    //     0:VueComponent {_uid: 39, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
-    //      length:1
-    //      __proto__:Array(0)
-    // console.log(this.$refs.dialog1.open)
+  created: function() {
+    // var countup1 = () => {
+    //   this.$refs.dialog1.open()
+    // }
+    return firebase
+      .database()
+      .ref('/users/' + this.$route.params.userSiteName)
+      .once('value')
+      .then(snapshot => {
+        console.log('eefjaowej', snapshot.val().array)
+        console.log(JSON.parse(snapshot.val().array))
+        console.log()
+        this.usersiteCode = JSON.parse(snapshot.val().array)
+        for (var i = 0; i < this.usersiteCode.length; i++) {
+          // console.log(reloadArray[i])
+          if (this.usersiteCode[i].type === 'root') {
+          } else {
+            // console.log(this.usersiteCode[i])
+            this.blocks.splice(i, 0, this.usersiteCode[i])
+            // console.log(this.blocks)
+            this.saveString = JSON.stringify(this.blocks)
+          }
+        }
+      })
+    // }
+    // setTimeout(countup1, 1000)
 
-    var countup = () => {
-      this.$refs.dialog1.open()
-    }
-    setTimeout(countup, 100)
+    // var countup = () => {
+    //   return firebase
+    //     .database()
+    //     .ref('/users/' + this.$route.params.siteName)
+    //     .once('value')
+    //     .then(snapshot => {
+    //       // this.usersiteCode = snapshot.val().code
+    //       console.log(this.$route.params.userSiteName)
+    //
+    //       console.log('取得したコードはfafewa', snapshot.val())
+    //       var aa = snapshot.val()
+    //       console.log(aa)
+    //       // for (var i in aa) {
+    //       //   console.log(i)
+    //       // }
+    //       // for (var i = 0; i < snapshot.val().length; i++) {
+    //       //   console.log(snapshot.val()[i])
+    //       // }
+    //     })
+    // }
+    // setTimeout(countup, 500)
   }
 }
 </script>
@@ -471,11 +504,10 @@ a {
 .md-toolbar{
   margin-top: -64px;
   margin-right: 10px;
-  width: 525px;
+  width: 250px;
   margin-left: auto;
 }
-.tutorialDialog {
+.md-dialog {
   width: 100vw;
 }
-
 </style>

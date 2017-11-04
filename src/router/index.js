@@ -4,6 +4,7 @@ import Hello from '@/components/Hello'
 import Home from '@/components/Home'
 import userSite from '@/components/userSite'
 import everyOneCode from '@/components/everyOneCode'
+import everyOneCodeEdit from '@/components/everyOneCodeEdit'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/usersite/:siteName',
       name: 'userSite',
       component: userSite
+    },
+    {
+      path: '/everyOneCode/:userSiteName',
+      name: 'userSiteName',
+      component: everyOneCodeEdit
     }
   ]
 })
