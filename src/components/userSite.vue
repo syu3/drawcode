@@ -18,7 +18,7 @@ export default {
   created: function() {
     return firebase
       .database()
-      .ref('/users/' + this.$route.params.userSiteName)
+      .ref('/users/' + this.$route.params.siteName)
       .once('value')
       .then(snapshot => {
         console.log('eefjaowej', snapshot.val().code)
