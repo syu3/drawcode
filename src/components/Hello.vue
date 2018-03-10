@@ -114,11 +114,11 @@
       </md-dialog> -->
 
     </div>
-    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" class="tutorialDialog" ref="dialog1" style="width:100vw; min-width: 50vw;" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
-      <md-boards :md-controls="true"  class="md-primary" >
 
+    <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" class="tutorialDialog" ref="dialog1" style="width:100%;">
+      <md-boards :md-controls="true">
         <md-board id="slide1" >
-          <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png"></md-image>
+          <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png" style="width:20000px;"></md-image>
         </md-board>
         <md-board id="slide2">
           <img src="./tutorial0.png">
@@ -130,6 +130,7 @@
           <img src="./tutorial2.png">
         </md-board>
       </md-boards>
+
     </md-dialog>
 
     <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
@@ -390,7 +391,7 @@ export default {
       return preview
     }
   },
-  mounted: function() {
+  created: function() {
     console.log(this)
     // VueComponent {_uid: 17, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
     console.log(this.$refs)
@@ -474,8 +475,9 @@ a {
   width: 525px;
   margin-left: auto;
 }
-.tutorialDialog {
+.md-dialog{width: 60%;}
+/*.tutorialDialog {
   width: 100vw;
-}
-
+}*/
+/*.md-dialog{width:90%;}*/
 </style>

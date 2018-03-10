@@ -6,7 +6,7 @@
       <!-- <md-button class="md-raised" @click='reload()'>読み込む</md-button>
       <md-button class="md-raised" @click="save()">保存</md-button> -->
       <md-button class="md-raised" @click="preview('dialog4')">プレビュー</md-button>
-      <!-- <md-button class="md-raised md-warn" @click="upload()">公開</md-button> -->
+      <md-button class="md-raised md-warn" @click="upload()">公開</md-button>
 
 
 
@@ -59,7 +59,7 @@
           <md-button @click="removeBlock(block)" class="md-raised md-accent" v-if="block.type!='root'">
             <span>削除</span>
           </md-button>
-          <md-button v-on:selected="newLine()" class="md-raised md-primary">
+          <md-button @click="newLine()" class="md-raised md-primary">
             <span>新しく書く（改行）</span>
           </md-button>
 
@@ -102,6 +102,7 @@
         v-model="prompt.value"
         ref="dialog6">
       </md-dialog-prompt>
+
       <!-- <md-dialog md-open-from="#custom" md-close-to="#custom" ref="dialog4" class="previewDialog">
         <md-dialog-title>Lorem ipsum dolor sit amet</md-dialog-title>
 
@@ -114,6 +115,15 @@
       </md-dialog> -->
 
     </div>
+    <md-dialog-alert
+      :md-title="dialog.title"
+      :md-content="dialog.content"
+      :md-ok-text="dialog.ok"
+      @open="onOpen"
+      @close="dialogClose"
+      ref="dialog"
+      >
+    </md-dialog-alert>
     <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" ref="dialog1" style="width:100vw;" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
       <md-boards :md-controls="true"  class="md-primary" >
 
@@ -171,13 +181,18 @@ export default {
       },
       saveString: '',
       prompt: {
-        title: 'ニックネームをいれてください',
+        title: 'サイト名をいれてください',
         ok: '公開する',
         cancel: 'やめる',
         id: 'name',
         name: 'name',
         placeholder: '例）',
         value: ''
+      },
+      dialog: {
+        title: 'title',
+        content: 'content',
+        ok: '閉じる'
       },
       userSiteCode: []
     }
@@ -201,17 +216,28 @@ export default {
       console.log(this.$refs[refs])
       this.$refs[refs].open()
     },
+    dialogClose: function(type) {
+      // console.log('refs', type)
+      this.$refs.dialog6[0].open()
+    },
     uploadClose: function(type) {
       console.log('typeは', type)
+      console.log('userSiteNameは', this.$route.params.userSiteName)
       if (type !== 'cancel') {
-        console.log(this.prompt.value)
-        var database = firebase.database()
-        console.log(database)
-        console.log('3')
-        database.ref('users/' + this.prompt.value).set({
-          code: this.codeString
-        })
-        this.$refs.uploadFinish[0].open()
+        if (this.prompt.value !== this.$route.params.userSiteName) {
+          console.log(this.prompt.value)
+          var database = firebase.database()
+          console.log(database)
+          console.log('3')
+          database.ref('users/' + this.prompt.value).set({
+            code: this.codeString
+          })
+          this.$refs.uploadFinish[0].open()
+        } else {
+          this.dialog.title = '公開できません'
+          this.dialog.content = 'このサイト名は使われています。\nサイト名を変更してください。'
+          this.$refs.dialog.open()
+        }
       }
     },
     showHitns: function() {
@@ -504,7 +530,7 @@ a {
 .md-toolbar{
   margin-top: -64px;
   margin-right: 10px;
-  width: 250px;
+  width:330px;
   margin-left: auto;
 }
 .md-dialog {

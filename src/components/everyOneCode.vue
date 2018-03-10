@@ -64,12 +64,12 @@ export default {
         console.log('aは', aa)
         this.userSiteArray = aa
         console.log(this.userSiteArray)
-        var countup = function() {
-          console.log('fawef', document.querySelector('.userSiteImage'))
-          var userCode = document.querySelector('.userSiteImage')
-          userCode.srcdoc = aa
-        }
-        setTimeout(countup, 5000)
+        // var countup = function() {
+        //   console.log('fawef', document.querySelector('.userSiteImage'))
+        //   var userCode = document.querySelector('.userSiteImage')
+        //   userCode.srcdoc = aa
+        // }
+        // setTimeout(countup, 5000)
       }
       // for (var i = 0; i < snapshot.val().length; i++) {
       //   console.log(snapshot.val()[i])
