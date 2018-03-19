@@ -20,6 +20,8 @@
 
     <div class="blocks"　v-for="blocks in blocksArray">
 
+
+
       <md-menu md-align-trigger md-offset-y="12" md-direction='bottom right' v-for="block in blocks" @open="selectedBlock = block">
         <md-button class="md-raised md-primary block" v-if="block.type=='tag'" md-menu-trigger>{{ "<"+block.name }}</md-button>
         <md-button class="md-raised md-warn block" v-if="block.type=='text'" md-menu-trigger>{{block.content }}<i class="material-icons editButton" @click='editBlock(block,"text")'>edit</i></md-button>
@@ -119,14 +121,15 @@
 
 
 
-
+    <img src="./tutorialfirst.png" style="display:none;">
 
 
 
     <md-dialog @md-open-from="openDialog()" @md-close-to="closeDialog()" class="tutorialDialog" ref="dialog1">
       <md-boards :md-controls="true">
         <md-board id="slide1" >
-          <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png" style="width:20000px;"></md-image>
+          <!-- <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png"></md-image> -->
+          <md-image md-src="static/tutorialfirst.png"></md-image>
         </md-board>
         <md-board id="slide2">
           <img src="./tutorial0.png">
@@ -138,30 +141,15 @@
           <img src="./tutorial2.png">
         </md-board>
       </md-boards>
-      <!-- <md-tabs md-dynamic-height>
-        <md-tab md-label="プログラム例">
-          <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png"></md-image>
-        </md-tab>
-
-        <md-tab md-label="言葉の説明">
-          <img src="./tutorial0.png">
-        </md-tab>
-
-        <md-tab md-label="使い方">
-          <img src="./tutorial1.png">
-        </md-tab>
-
-        <md-tab md-label="コードの書き方">
-          <img src="./tutorial2.png">
-        </md-tab>
-
-        <md-tab md-label="General">
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam mollitia dolorum dolores quae commodi impedit possimus qui, atque at voluptates cupiditate. Neque quae culpa suscipit praesentium inventore ducimus ipsa aut.</p>
-</md-tab>
-      </md-tabs> -->
     </md-dialog>
+    <!-- <md-dialog-alert
+      :md-title="tutorialDialog.title"
+      :md-content-html="tutorialDialog.contentHtml"
+      @open="onOpen"
+      @close="onClose"
+      ref="dialog1"
+      >
+    </md-dialog-alert> -->
 
 
 
@@ -192,7 +180,7 @@
       </div> -->
 
 
-    <md-card>
+    <!-- <md-card>
       <md-card-header>
         <div class="md-title">ログイン</div>
       </md-card-header>
@@ -222,19 +210,24 @@
           <label>パスワード</label>
           <md-input v-model="signinPass" minlength = "6"></md-input>
         </md-input-container>
-        <md-field>
-          <label>Max Length</label>
-          <md-input v-model="maxLength" maxlength="30"></md-input>
-        </md-field>
+        <md-input-container class="md-input-invalid">
+          <label>Error with message</label>
+          <md-input required></md-input>
+
+          <span class="md-error">Validation message</span>
+        </md-input-container>
+
+
 
         <md-card-actions>
           <md-button class="md-primary" @click="signin()">サインイン</md-button>
 
         </md-card-actions>
       </form>
-    </md-card>
+    </md-card> -->
 
-
+    <!-- <md-card>
+    </md-card> -->
 
     <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
     <md-whiteframe md-elevation="9" style="width:100%; height:100px; position:absolute; bottom: 0px;">{{codeString}}</md-whiteframe>
@@ -282,6 +275,11 @@ export default {
         content: 'あなたのサイトのURLは、 https://drawcode.net/#/usersite/',
         ok: '閉じる'
       },
+      // tutorialDialog: {
+      //   title: 'Post created!',
+      //   contentHtml:
+      //     '<md-boards :md-controls="true"><md-board id="slide1" ><md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png" style="width:20000px;"></md-image></md-board><md-board id="slide2"><img src="./tutorial0.png"></md-board><md-board id="slide3"><img src="./tutorial1.png"></md-board><md-board id="slide4"><img src="./tutorial2.png"></md-board></md-boards>'
+      // },
       saveString: '',
       prompt: {
         title: 'サイト名をいれてください',
@@ -626,5 +624,8 @@ a {
 /*.tutorialDialog {
   width: 100vw;
 }*/
-/*.md-dialog{width:90%;}*/
+/* .md-dialog {width:90%;} */
+.md-dialog-container div{
+  width: 60vw;
+}
 </style>
