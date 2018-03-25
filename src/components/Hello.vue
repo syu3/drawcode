@@ -129,7 +129,7 @@
       <md-boards :md-controls="true">
         <md-board id="slide1" >
           <!-- <md-image md-src="http://kodomonokuni.sakuraweb.com/tutorialfirst.png"></md-image> -->
-          <md-image md-src="static/tutorialfirst.png"></md-image>
+          <md-image md-src="static/tutorialfirst.png" style="width:30wh;"></md-image>
         </md-board>
         <md-board id="slide2">
           <img src="./tutorial0.png">
@@ -345,16 +345,16 @@ export default {
       if (index >= 0) {
         this.blocks.splice(index + 1, 0, block)
       }
-      this.saveString = JSON.stringify(this.blocks)
-      console.log(this.saveString)
-      var date1, date2 // 日付データを格納する変数
-      var kigen = 30 // cookieの期限（今回は30日）
-      date1 = new Date()
-      date1.setTime(date1.getTime() + kigen * 24 * 60 * 60 * 1000)
-      date2 = date1.toGMTString()
-
-      console.log('保存するものは', this.saveString)
-      document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
+      // this.saveString = JSON.stringify(this.blocks)
+      // console.log(this.saveString)
+      // var date1, date2 // 日付データを格納する変数
+      // var kigen = 30 // cookieの期限（今回は30日）
+      // date1 = new Date()
+      // date1.setTime(date1.getTime() + kigen * 24 * 60 * 60 * 1000)
+      // date2 = date1.toGMTString()
+      //
+      // console.log('保存するものは', this.saveString)
+      // document.cookie = 'saveString = ' + this.saveString + ';expires=' + date2
 
       // this.blocks.push(block)
     },
@@ -374,18 +374,37 @@ export default {
       }
     },
     editBlock: function(block, type, value) {
-      console.log('faefa', block)
-      if (
-        block.content !== 'テキスト'
-        // block.value !== 'URL' ||
-        // block.value !== '画像' ||
-        // block.value !== '画像・URL' ||
-        // block.value !== '文字の色'
-      ) {
-        var userText = window.prompt('変更したいテキストを入力してください!', block.content)
-      } else {
-        userText = window.prompt('変更したいテキストを入力してください')
-      }
+      // console.log(block.value)
+      // console.log(block.content)
+      // if (block.content !== null) {
+      //   console.log('nullだよ')
+      // }
+      // if (
+      //   block.content !== 'テキスト' ||
+      //   (block.youtubeValue !== 'value' && block.content !== null)
+      // ) {
+      //   alert('one')
+      //   var userText = window.prompt('変更したいテキストを入力してください!', block.content)
+      // } else {
+      //   alert('none')
+      //   userText = window.prompt('変更したいテキストを入力してください')
+      // }
+      //
+      // if (
+      //   block.value !== 'URL' ||
+      //   block.value !== '背景色を入力' ||
+      //   // block.value !== 'URL' ||
+      //   block.value !== '〇〇px' ||
+      //   block.value !== '画像' ||
+      //   block.value !== '画像・URL' ||
+      //   (block.value !== '文字の色' && block.content !== null)
+      // ) {
+      //   alert(block.value)
+      //   userText = window.prompt('変更したいテキストを入力してください', block.value)
+      // } else {
+      //   alert('none')
+      var userText = window.prompt('変更したいテキストを入力してください')
+      // }
       // var index = block.indexOf("{type:'text',content:")
       // block.splice(index + 1, index + 1, 'afejaofj')
       if (type === 'text') {
@@ -620,7 +639,7 @@ a {
   width: 525px;
   margin-left: auto;
 }
-.md-dialog{width: 60%;}
+/* .md-dialog{width: 60%;} */
 /*.tutorialDialog {
   width: 100vw;
 }*/
