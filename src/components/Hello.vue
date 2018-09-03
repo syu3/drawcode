@@ -403,7 +403,20 @@ export default {
       //   userText = window.prompt('変更したいテキストを入力してください', block.value)
       // } else {
       //   alert('none')
-      var userText = window.prompt('変更したいテキストを入力してください')
+      if (block.content != null) {
+        var userText = window.prompt('変更したいテキストを入力してください', block.content)
+      } else if (block.value != null) {
+        userText = window.prompt('変更したいテキストを入力してください', block.value)
+      } else {
+        userText = window.prompt('変更したいテキストを入力してください')
+      }
+      // else if (block.content != null) {
+      //   var userText = window.prompt('変更したいテキストを入力してください',block.content)
+      // }else if (block.content != null) {
+      //   var userText = window.prompt('変更したいテキストを入力してください',block.content)
+      // }
+
+      // var userText = window.prompt('変更したいテキストを入力してください')
       // }
       // var index = block.indexOf("{type:'text',content:")
       // block.splice(index + 1, index + 1, 'afejaofj')

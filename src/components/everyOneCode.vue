@@ -61,7 +61,8 @@ export default {
         // // userSiteBox.textContent = aa[i]
         // document.body.appendChild(userSiteBox)
         this.userNameArray.push(i)
-        console.log('aは', aa)
+        console.log('aは', this.userNameArray)
+
         this.userSiteArray = aa
         console.log(this.userSiteArray)
         // var countup = function() {
